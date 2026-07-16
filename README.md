@@ -28,6 +28,8 @@ También se puede ejecutar el script ya compilado directamente:
 .\liadevtech.ps1
 ```
 
+O con doble clic en **`Iniciar Liadev Tech.bat`** (lanza el script y pide permisos de administrador solo).
+
 ## Estructura
 
 - `Compile.ps1` — une funciones, configuración JSON y XAML en un único `liadevtech.ps1`.
