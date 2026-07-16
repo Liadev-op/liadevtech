@@ -263,5 +263,82 @@
     "InvokeScript": [
       "Start-Process 'ms-settings:activation'"
     ]
+  },
+  "WPFDaikinHalcyon": {
+    "Content": "Halcyon Anti-Ransomware - Instalar",
+    "Description": "Lanza el instalador de Halcyon y copia la clave de licencia (token.txt) al portapapeles para pegarla cuando la pida.",
+    "category": "0__Daikin (corporativo)",
+    "panel": "1",
+    "Type": "Button",
+    "ButtonWidth": "300",
+    "InvokeScript": [
+      "Invoke-DaikinAgent -Agent 'Halcyon'"
+    ]
+  },
+  "WPFDaikinCrowdStrike": {
+    "Content": "CrowdStrike Falcon (EDR) - Instalar",
+    "Description": "Ejecuta el script corporativo de instalacion del sensor CrowdStrike Falcon. Puede tardar varios minutos.",
+    "category": "0__Daikin (corporativo)",
+    "panel": "1",
+    "Type": "Button",
+    "ButtonWidth": "300",
+    "InvokeScript": [
+      "Invoke-DaikinAgent -Agent 'CrowdStrike'"
+    ]
+  },
+  "WPFDaikinTanium": {
+    "Content": "Tanium Client - Instalar",
+    "Description": "Ejecuta el script corporativo de instalacion del cliente Tanium.",
+    "category": "0__Daikin (corporativo)",
+    "panel": "1",
+    "Type": "Button",
+    "ButtonWidth": "300",
+    "InvokeScript": [
+      "Invoke-DaikinAgent -Agent 'Tanium'"
+    ]
+  },
+  "WPFDaikinZscaler": {
+    "Content": "Zscaler Client Connector - Instalar",
+    "Description": "Lanza el instalador de Zscaler Client Connector.",
+    "category": "0__Daikin (corporativo)",
+    "panel": "1",
+    "Type": "Button",
+    "ButtonWidth": "300",
+    "InvokeScript": [
+      "Invoke-DaikinAgent -Agent 'Zscaler'"
+    ]
+  },
+  "WPFDaikinCSStatus": {
+    "Content": "Estado de CrowdStrike",
+    "Description": "Muestra si el servicio csagent (CrowdStrike Falcon) esta instalado y corriendo.",
+    "category": "0__Daikin (corporativo)",
+    "panel": "1",
+    "Type": "Button",
+    "ButtonWidth": "300",
+    "InvokeScript": [
+      "Invoke-DaikinAgent -Agent 'CrowdStrikeStatus'"
+    ]
+  },
+  "WPFDaikinTaniumStatus": {
+    "Content": "Estado de Tanium",
+    "Description": "Muestra si el cliente Tanium esta corriendo y cuando fue su ultima conexion con Tanium Cloud.",
+    "category": "0__Daikin (corporativo)",
+    "panel": "1",
+    "Type": "Button",
+    "ButtonWidth": "300",
+    "InvokeScript": [
+      "Invoke-DaikinAgent -Agent 'TaniumStatus'"
+    ]
+  },
+  "WPFDaikinOpenFolder": {
+    "Content": "Abrir carpeta de instaladores",
+    "Description": "Abre la carpeta donde la app busca los instaladores corporativos de Daikin.",
+    "category": "0__Daikin (corporativo)",
+    "panel": "1",
+    "Type": "Button",
+    "ButtonWidth": "300",
+    "InvokeScript": [
+      "Invoke-DaikinAgent -Agent 'OpenFolder'"
+    ]
   }
 }

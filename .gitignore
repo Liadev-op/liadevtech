@@ -5,3 +5,17 @@ liadevtech.exe
 # Logs y temporales
 *.log
 logs/
+
+# ─────────────────────────────────────────────────────────────
+# Material corporativo: NUNCA subir al repo publico.
+# Instaladores propietarios, claves de licencia y datos de agentes.
+# ─────────────────────────────────────────────────────────────
+Daikin/
+daikin/
+token.txt
+*.vbe
+FalconSensor*.exe
+Halcyon*.exe
+Zscaler*.exe
+SetupClient.exe
+tanium-init.dat
