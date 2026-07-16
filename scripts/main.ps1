@@ -436,7 +436,7 @@ $sync["FontScalingApplyButton"].Add_Click({
 
 
 # Chequeo de nueva version (silencioso, no bloquea el arranque)
-$sync.updateCheckRepo = "liadevsv/liadevtech"
+$sync.updateCheckRepo = "Liadev-op/liadevtech"
 Invoke-WPFRunspace -ParameterList @(,("repo", $sync.updateCheckRepo)) -ScriptBlock {
     param($repo)
     try {
