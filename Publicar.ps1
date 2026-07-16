@@ -52,14 +52,21 @@ if ($errs.Count -gt 0) {
 }
 
 # 2. Commit + push
+# git escribe informacion normal a stderr; lo redirigimos para que no aborte el script
 Write-Host "[2/4] Commit y push..." -ForegroundColor Cyan
 git add -A
 $hayCambios = (git status --porcelain)
 if ($hayCambios) {
-    git commit -m $Mensaje | Out-Null
-    git push
+    git commit -m $Mensaje 2>&1 | Out-Null
+    git push 2>&1 | Out-Null
+    if ($LASTEXITCODE -ne 0) {
+        Write-Host "  El push fallo (codigo $LASTEXITCODE). Revisa tu conexion o autenticacion." -ForegroundColor Red
+        return
+    }
 } else {
     Write-Host "  Sin cambios para commitear." -ForegroundColor DarkGray
+    # Igual sincronizamos por si hubo commits locales sin subir
+    git push 2>&1 | Out-Null
 }
 
 # 3. Calcular version (misma logica que Compile.ps1)
