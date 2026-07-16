@@ -4,6 +4,14 @@ Utilidad todo-en-uno para Windows: instalación de aplicaciones seleccionadas, t
 
 Basado en [WinUtil de Chris Titus Tech](https://github.com/ChrisTitusTech/winutil), publicado bajo licencia MIT.
 
+## Instalación rápida
+
+Abrí PowerShell **como administrador** y ejecutá:
+
+```powershell
+irm https://github.com/Liadev-op/liadevtech/releases/latest/download/liadevtech.ps1 | iex
+```
+
 ## Requisitos
 
 - Windows 10 / 11
