@@ -1,0 +1,223 @@
+{
+  "WPFFeaturesdotnet": {
+    "Content": ".NET Framework (versiones 2, 3 y 4) - Activar",
+    "Description": "Activa .NET Framework, la plataforma de Microsoft necesaria para ejecutar muchas aplicaciones de escritorio.",
+    "category": "1__Caracteristicas de Windows",
+    "panel": "1",
+    "feature": [
+      "NetFx4-AdvSrvs",
+      "NetFx3"
+    ],
+    "InvokeScript": []
+  },
+  "WPFFeatureshyperv": {
+    "Content": "Hyper-V - Activar",
+    "Description": "Hyper-V es el sistema de virtualizacion de Microsoft para crear y administrar maquinas virtuales.",
+    "category": "1__Caracteristicas de Windows",
+    "panel": "1",
+    "feature": [
+      "Microsoft-Hyper-V-All"
+    ]
+  },
+  "WPFFeaturewsl": {
+    "Content": "Subsistema de Linux (WSL) - Activar",
+    "Description": "Permite ejecutar programas de Linux de forma nativa en Windows, sin maquina virtual ni arranque dual.",
+    "category": "1__Caracteristicas de Windows",
+    "panel": "1",
+    "feature": [
+      "VirtualMachinePlatform",
+      "Microsoft-Windows-Subsystem-Linux"
+    ],
+    "InvokeScript": []
+  },
+  "WPFFeaturenfs": {
+    "Content": "Sistema de archivos de red (NFS) - Activar",
+    "Description": "NFS es un mecanismo para acceder a archivos compartidos en red, comun en entornos Linux/Unix.",
+    "category": "1__Caracteristicas de Windows",
+    "panel": "1",
+    "feature": [
+      "ServicesForNFS-ClientOnly",
+      "ClientForNFS-Infrastructure",
+      "NFS-Administration"
+    ],
+    "InvokeScript": [
+      "nfsadmin client stop",
+      "Set-ItemProperty -Path 'HKLM:\\SOFTWARE\\Microsoft\\ClientForNFS\\CurrentVersion\\Default' -Name 'AnonymousUID' -Type DWord -Value 0",
+      "Set-ItemProperty -Path 'HKLM:\\SOFTWARE\\Microsoft\\ClientForNFS\\CurrentVersion\\Default' -Name 'AnonymousGID' -Type DWord -Value 0",
+      "nfsadmin client start",
+      "nfsadmin client localhost config fileaccess=755 SecFlavors=+sys -krb5 -krb5i"
+    ]
+  },
+  "WPFFeatureInstall": {
+    "Content": "Instalar caracteristicas seleccionadas",
+    "category": "1__Caracteristicas de Windows",
+    "panel": "1",
+    "Type": "Button",
+    "ButtonWidth": "300",
+    "function": "Invoke-WPFFeatureInstall"
+  },
+  "WPFFixesNetwork": {
+    "Content": "Restablecer red",
+    "category": "2__Reparaciones",
+    "panel": "1",
+    "Type": "Button",
+    "ButtonWidth": "300",
+    "function": "Invoke-WPFFixesNetwork"
+  },
+  "WPFPanelDISM": {
+    "Content": "Reparar archivos del sistema (SFC + DISM)",
+    "category": "2__Reparaciones",
+    "panel": "1",
+    "Type": "Button",
+    "ButtonWidth": "300",
+    "function": "Invoke-WPFSystemRepair"
+  },
+  "WPFPanelComputer": {
+    "Content": "Administracion de equipos",
+    "category": "3__Paneles clasicos de Windows",
+    "panel": "1",
+    "Type": "Button",
+    "ButtonWidth": "300",
+    "InvokeScript": [
+      "compmgmt.msc"
+    ]
+  },
+  "WPFPanelControl": {
+    "Content": "Panel de control",
+    "category": "3__Paneles clasicos de Windows",
+    "panel": "1",
+    "Type": "Button",
+    "ButtonWidth": "300",
+    "InvokeScript": [
+      "control"
+    ]
+  },
+  "WPFPanelMouse": {
+    "Content": "Propiedades del mouse",
+    "category": "3__Paneles clasicos de Windows",
+    "panel": "1",
+    "Type": "Button",
+    "ButtonWidth": "300",
+    "InvokeScript": [
+      "main.cpl"
+    ]
+  },
+  "WPFPanelNetwork": {
+    "Content": "Conexiones de red",
+    "category": "3__Paneles clasicos de Windows",
+    "panel": "1",
+    "Type": "Button",
+    "ButtonWidth": "300",
+    "InvokeScript": [
+      "ncpa.cpl"
+    ]
+  },
+  "WPFPanelPower": {
+    "Content": "Opciones de energia",
+    "category": "3__Paneles clasicos de Windows",
+    "panel": "1",
+    "Type": "Button",
+    "ButtonWidth": "300",
+    "InvokeScript": [
+      "powercfg.cpl"
+    ]
+  },
+  "WPFPanelPrinter": {
+    "Content": "Impresoras",
+    "category": "3__Paneles clasicos de Windows",
+    "panel": "1",
+    "Type": "Button",
+    "ButtonWidth": "300",
+    "InvokeScript": [
+      "Start-Process 'shell:::{A8A91A66-3A7D-4424-8D24-04E180695C7A}'"
+    ]
+  },
+  "WPFPanelPrograms": {
+    "Content": "Programas y caracteristicas",
+    "category": "3__Paneles clasicos de Windows",
+    "panel": "1",
+    "Type": "Button",
+    "ButtonWidth": "300",
+    "InvokeScript": [
+      "appwiz.cpl"
+    ]
+  },
+  "WPFPanelRegion": {
+    "Content": "Region",
+    "category": "3__Paneles clasicos de Windows",
+    "panel": "1",
+    "Type": "Button",
+    "ButtonWidth": "300",
+    "InvokeScript": [
+      "intl.cpl"
+    ]
+  },
+  "WPFPanelSecurity": {
+    "Content": "Seguridad y mantenimiento",
+    "category": "3__Paneles clasicos de Windows",
+    "panel": "1",
+    "Type": "Button",
+    "ButtonWidth": "300",
+    "InvokeScript": [
+      "wscui.cpl"
+    ]
+  },
+  "WPFPanelSound": {
+    "Content": "Configuracion de sonido",
+    "category": "3__Paneles clasicos de Windows",
+    "panel": "1",
+    "Type": "Button",
+    "ButtonWidth": "300",
+    "InvokeScript": [
+      "mmsys.cpl"
+    ]
+  },
+  "WPFPanelSystem": {
+    "Content": "Propiedades del sistema",
+    "category": "3__Paneles clasicos de Windows",
+    "panel": "1",
+    "Type": "Button",
+    "ButtonWidth": "300",
+    "InvokeScript": [
+      "sysdm.cpl"
+    ]
+  },
+  "WPFPanelTimedate": {
+    "Content": "Fecha y hora",
+    "category": "3__Paneles clasicos de Windows",
+    "panel": "1",
+    "Type": "Button",
+    "ButtonWidth": "300",
+    "InvokeScript": [
+      "timedate.cpl"
+    ]
+  },
+  "WPFPanelFirewall": {
+    "Content": "Firewall de Windows Defender",
+    "category": "3__Paneles clasicos de Windows",
+    "panel": "1",
+    "Type": "Button",
+    "ButtonWidth": "300",
+    "InvokeScript": [
+      "firewall.cpl"
+    ]
+  },
+  "WPFPanelRestore": {
+    "Content": "Restaurar sistema",
+    "category": "3__Paneles clasicos de Windows",
+    "panel": "1",
+    "Type": "Button",
+    "ButtonWidth": "300",
+    "InvokeScript": [
+      "rstrui.exe"
+    ]
+  },
+  "WPFWinUtilSSHServer": {
+    "Content": "Servidor OpenSSH - Activar",
+    "category": "4__Acceso remoto",
+    "panel": "1",
+    "Type": "Button",
+    "ButtonWidth": "300",
+    "function": "Invoke-WPFSSHServer"
+  }
+}

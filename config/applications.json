@@ -1,0 +1,488 @@
+{
+  "chrome": {
+    "category": "Navegadores",
+    "choco": "googlechrome",
+    "content": "Chrome",
+    "description": "Google Chrome is a widely used web browser known for its speed, simplicity, and seamless integration with Google services.",
+    "link": "https://www.google.com/chrome/",
+    "winget": "Google.Chrome",
+    "foss": false
+  },
+  "brave": {
+    "category": "Navegadores",
+    "choco": "brave",
+    "content": "Brave",
+    "description": "Brave is a privacy-focused web browser that blocks ads and trackers, offering a faster and safer browsing experience.",
+    "link": "https://www.brave.com",
+    "winget": "Brave.Brave",
+    "foss": true
+  },
+  "edge": {
+    "category": "Navegadores",
+    "choco": "microsoft-edge",
+    "content": "Edge",
+    "description": "Microsoft Edge is a modern web browser built on Chromium, offering performance, security, and integration with Microsoft services.",
+    "link": "https://www.microsoft.com/edge",
+    "winget": "Microsoft.Edge",
+    "foss": false
+  },
+  "ZenBrowser": {
+    "category": "Navegadores",
+    "choco": "zen-browser",
+    "content": "Zen Browser",
+    "description": "The modern, privacy-focused, performance-driven browser built on Firefox.",
+    "link": "https://zen-browser.app/",
+    "winget": "Zen-Team.Zen-Browser",
+    "foss": true
+  },
+  "firefox": {
+    "category": "Navegadores",
+    "choco": "firefox",
+    "content": "Firefox",
+    "description": "Mozilla Firefox is an open-source web browser known for its customization options, privacy features, and extensions.",
+    "link": "https://www.mozilla.org/en-US/firefox/new/",
+    "winget": "Mozilla.Firefox",
+    "foss": true
+  },
+  "telegram": {
+    "category": "Comunicacion",
+    "choco": "telegram",
+    "content": "Telegram",
+    "description": "Telegram is a cloud-based instant messaging app known for its security features, speed, and simplicity.",
+    "link": "https://telegram.org/",
+    "winget": "Telegram.TelegramDesktop",
+    "foss": true
+  },
+  "discord": {
+    "category": "Comunicacion",
+    "choco": "discord",
+    "content": "Discord",
+    "description": "Discord is a popular communication platform with voice, video, and text chat, designed for gamers but used by a wide range of communities.",
+    "link": "https://discord.com/",
+    "winget": "Discord.Discord",
+    "foss": false
+  },
+  "teams": {
+    "category": "Comunicacion",
+    "choco": "microsoft-teams",
+    "content": "Teams",
+    "description": "Microsoft Teams is a collaboration platform that integrates with Office 365 and offers chat, video conferencing, file sharing, and more.",
+    "link": "https://www.microsoft.com/en-us/microsoft-teams/group-chat-software",
+    "winget": "Microsoft.Teams",
+    "foss": false
+  },
+  "winrar": {
+    "category": "Utilidades",
+    "choco": "winrar",
+    "content": "WinRAR",
+    "description": "WinRAR is a powerful archive manager that allows you to create, manage, and extract compressed files.",
+    "link": "https://www.win-rar.com/",
+    "winget": "RARLab.WinRAR",
+    "foss": false
+  },
+  "7zip": {
+    "category": "Utilidades",
+    "choco": "7zip",
+    "content": "7-Zip",
+    "description": "7-Zip is a free and open-source file archiver utility. It supports several compression formats and provides a high compression ratio, making it a popular choice for file compression.",
+    "link": "https://www.7-zip.org/",
+    "winget": "7zip.7zip",
+    "foss": true
+  },
+  "lightshot": {
+    "category": "Utilidades",
+    "choco": "lightshot",
+    "content": "Lightshot",
+    "description": "Herramienta ligera para capturas de pantalla con editor rapido y compartido instantaneo.",
+    "link": "https://app.prntscr.com/",
+    "winget": "Skillbrains.Lightshot",
+    "foss": false
+  },
+  "rufus": {
+    "category": "Utilidades",
+    "choco": "rufus",
+    "content": "Rufus Imager",
+    "description": "Rufus is a utility that helps format and create bootable USB drives, such as USB keys or pen drives.",
+    "link": "https://rufus.ie/",
+    "winget": "Rufus.Rufus",
+    "foss": true
+  },
+  "wiztree": {
+    "category": "Utilidades",
+    "choco": "wiztree",
+    "content": "WizTree",
+    "description": "WizTree is a fast disk space analyzer that helps you quickly find the files and folders consuming the most space on your hard drive.",
+    "link": "https://wiztreefree.com/",
+    "winget": "AntibodySoftware.WizTree",
+    "foss": false
+  },
+  "crystaldiskinfo": {
+    "category": "Utilidades",
+    "choco": "crystaldiskinfo",
+    "content": "Crystal Disk Info",
+    "description": "Crystal Disk Info is a disk health monitoring tool that provides information about the status and performance of hard drives. It helps users anticipate potential issues and monitor drive health.",
+    "link": "https://crystalmark.info/en/software/crystaldiskinfo/",
+    "winget": "CrystalDewWorld.CrystalDiskInfo",
+    "foss": true
+  },
+  "crystaldiskmark": {
+    "category": "Utilidades",
+    "choco": "crystaldiskmark",
+    "content": "Crystal Disk Mark",
+    "description": "Crystal Disk Mark is a disk benchmarking tool that measures the read and write speeds of storage devices. It helps users assess the performance of their hard drives and SSDs.",
+    "link": "https://crystalmark.info/en/software/crystaldiskmark/",
+    "winget": "CrystalDewWorld.CrystalDiskMark",
+    "foss": true
+  },
+  "anydesk": {
+    "category": "Utilidades",
+    "choco": "anydesk",
+    "content": "AnyDesk",
+    "description": "AnyDesk is a remote desktop software that enables users to access and control computers remotely. It is known for its fast connection and low latency.",
+    "link": "https://anydesk.com/",
+    "winget": "AnyDesk.AnyDesk",
+    "foss": false
+  },
+  "googledrive": {
+    "category": "Utilidades",
+    "choco": "googledrive",
+    "content": "Google Drive",
+    "description": "File syncing across devices all tied to your Google account.",
+    "link": "https://www.google.com/drive/",
+    "winget": "Google.GoogleDrive",
+    "foss": false
+  },
+  "office365": {
+    "category": "Oficina y documentos",
+    "choco": "office365proplus",
+    "content": "Office 365 completo",
+    "description": "Instala el paquete completo de Microsoft Office (Word, Excel, PowerPoint, Outlook, OneNote, Access). Requiere cuenta/licencia Microsoft 365 para activarlo.",
+    "link": "https://www.microsoft.com/microsoft-365",
+    "winget": "Microsoft.Office",
+    "foss": false
+  },
+  "adobe": {
+    "category": "Oficina y documentos",
+    "choco": "adobereader",
+    "content": "Adobe Acrobat Reader",
+    "description": "Adobe Acrobat Reader is a free PDF viewer with essential features for viewing, printing, and annotating PDF documents.",
+    "link": "https://www.adobe.com/acrobat/pdf-reader.html",
+    "winget": "Adobe.Acrobat.Reader.64-bit",
+    "foss": false
+  },
+  "notepadplus": {
+    "category": "Desarrollo",
+    "choco": "notepadplusplus",
+    "content": "Notepad++",
+    "description": "Notepad++ is a free, open-source code editor and Notepad replacement with support for multiple languages.",
+    "link": "https://notepad-plus-plus.org/",
+    "winget": "Notepad++.Notepad++",
+    "foss": true
+  },
+  "sublimetext": {
+    "category": "Desarrollo",
+    "choco": "sublimetext4",
+    "content": "Sublime Text",
+    "description": "Sublime Text is a sophisticated text editor for code, markup, and prose.",
+    "link": "https://www.sublimetext.com/",
+    "winget": "SublimeHQ.SublimeText.4",
+    "foss": false
+  },
+  "vscode": {
+    "category": "Desarrollo",
+    "choco": "vscode",
+    "content": "VS Code",
+    "description": "Visual Studio Code is a free, open-source code editor with support for multiple programming languages.",
+    "link": "https://code.visualstudio.com/",
+    "winget": "Microsoft.VisualStudioCode",
+    "foss": true
+  },
+  "visualstudio2022": {
+    "category": "Desarrollo",
+    "choco": "visualstudio2022community",
+    "content": "Visual Studio 2022",
+    "description": "Visual Studio 2022 is an integrated development environment (IDE) for building, debugging, and deploying applications.",
+    "link": "https://visualstudio.microsoft.com/",
+    "winget": "Microsoft.VisualStudio.2022.Community",
+    "foss": false
+  },
+  "visualstudio2026": {
+    "category": "Desarrollo",
+    "choco": "visualstudio2026community",
+    "content": "Visual Studio 2026",
+    "description": "Visual Studio 2026 is an integrated development environment (IDE) for building, debugging, and deploying applications.",
+    "link": "https://visualstudio.microsoft.com/",
+    "winget": "Microsoft.VisualStudio.Community",
+    "foss": false
+  },
+  "nodejs": {
+    "category": "Desarrollo",
+    "choco": "nodejs",
+    "content": "NodeJS",
+    "description": "NodeJS is a JavaScript runtime built on Chrome's V8 JavaScript engine for building server-side and networking applications.",
+    "link": "https://nodejs.org/",
+    "winget": "OpenJS.NodeJS",
+    "foss": true
+  },
+  "nodejslts": {
+    "category": "Desarrollo",
+    "choco": "nodejs-lts",
+    "content": "NodeJS LTS",
+    "description": "NodeJS LTS provides Long-Term Support releases for stable and reliable server-side JavaScript development.",
+    "link": "https://nodejs.org/",
+    "winget": "OpenJS.NodeJS.LTS",
+    "foss": true
+  },
+  "git": {
+    "category": "Desarrollo",
+    "choco": "git",
+    "content": "Git",
+    "description": "Git is a distributed version control system widely used for tracking changes in source code during software development.",
+    "link": "https://git-scm.com/",
+    "winget": "Git.Git",
+    "foss": true
+  },
+  "rustlang": {
+    "category": "Desarrollo",
+    "choco": "rust",
+    "content": "Rust",
+    "description": "Rust is a programming language designed for safety and performance, particularly focused on systems programming.",
+    "link": "https://www.rust-lang.org/",
+    "winget": "Rustlang.Rust.MSVC",
+    "foss": true
+  },
+  "python3": {
+    "category": "Desarrollo",
+    "choco": "python",
+    "content": "Python3",
+    "description": "Python is a versatile programming language used for web development, data analysis, artificial intelligence, and more.",
+    "link": "https://www.python.org/",
+    "winget": "Python.Python.3.14",
+    "foss": true
+  },
+  "dotnet6": {
+    "category": "Runtimes y componentes",
+    "choco": "dotnet-6.0-runtime",
+    "content": ".NET Desktop Runtime 6",
+    "description": ".NET Desktop Runtime 6 is a runtime environment required for running applications developed with .NET 6.",
+    "link": "https://dotnet.microsoft.com/download/dotnet/6.0",
+    "winget": "Microsoft.DotNet.DesktopRuntime.6",
+    "foss": true
+  },
+  "dotnet8": {
+    "category": "Runtimes y componentes",
+    "choco": "dotnet-8.0-runtime",
+    "content": ".NET Desktop Runtime 8",
+    "description": ".NET Desktop Runtime 8 is a runtime environment required for running applications developed with .NET 8.",
+    "link": "https://dotnet.microsoft.com/download/dotnet/8.0",
+    "winget": "Microsoft.DotNet.DesktopRuntime.8",
+    "foss": true
+  },
+  "dotnet9": {
+    "category": "Runtimes y componentes",
+    "choco": "dotnet-9.0-runtime",
+    "content": ".NET Desktop Runtime 9",
+    "description": ".NET Desktop Runtime 9 is a runtime environment required for running applications developed with .NET 9.",
+    "link": "https://dotnet.microsoft.com/download/dotnet/9.0",
+    "winget": "Microsoft.DotNet.DesktopRuntime.9",
+    "foss": true
+  },
+  "dotnet10": {
+    "category": "Runtimes y componentes",
+    "choco": "dotnet-10.0-runtime",
+    "content": ".NET Desktop Runtime 10",
+    "description": ".NET Desktop Runtime 10 is a runtime environment required for running applications developed with .NET 10.",
+    "link": "https://dotnet.microsoft.com/download/dotnet/10.0",
+    "winget": "Microsoft.DotNet.DesktopRuntime.10",
+    "foss": true
+  },
+  "vc2015_32": {
+    "category": "Runtimes y componentes",
+    "choco": "vcredist2015",
+    "content": "Visual C++ 2015-22 x86",
+    "description": "Visual C++ 2015-2022 32-bit redistributable package installs runtime components of Visual C++ libraries required to run 32-bit applications.",
+    "link": "https://support.microsoft.com/en-us/help/2977003/the-latest-supported-visual-c-downloads",
+    "winget": "Microsoft.VCRedist.2015+.x86",
+    "foss": false
+  },
+  "vc2015_64": {
+    "category": "Runtimes y componentes",
+    "choco": "vcredist2015",
+    "content": "Visual C++ 2015-22 x64",
+    "description": "Visual C++ 2015-2022 64-bit redistributable package installs runtime components of Visual C++ libraries required to run 64-bit applications.",
+    "link": "https://support.microsoft.com/en-us/help/2977003/the-latest-supported-visual-c-downloads",
+    "winget": "Microsoft.VCRedist.2015+.x64",
+    "foss": false
+  },
+  "vcredistaio": {
+    "category": "Runtimes y componentes",
+    "choco": "vcredist-all",
+    "content": "Visual C++ AIO (todos)",
+    "description": "Paquete todo-en-uno con todos los Visual C++ Redistributable (2005-2022), x86 y x64.",
+    "link": "https://github.com/abbodi1406/vcredist",
+    "winget": "abbodi1406.vcredist",
+    "foss": true
+  },
+  "vlc": {
+    "category": "Multimedia",
+    "choco": "vlc",
+    "content": "VLC (Video Player)",
+    "description": "VLC Media Player is a free and open-source multimedia player that supports a wide range of audio and video formats. It is known for its versatility and cross-platform compatibility.",
+    "link": "https://www.videolan.org/vlc/",
+    "winget": "VideoLAN.VLC",
+    "foss": true
+  },
+  "klite": {
+    "category": "Multimedia",
+    "choco": "k-litecodecpack-standard",
+    "content": "K-Lite Codec Standard",
+    "description": "K-Lite Codec Pack Standard is a collection of audio and video codecs and related tools, providing essential components for media playback.",
+    "link": "https://www.codecguide.com/",
+    "winget": "CodecGuide.K-LiteCodecPack.Standard",
+    "foss": false
+  },
+  "orcaslicer": {
+    "category": "Impresion 3D y diseno",
+    "choco": "orcaslicer",
+    "content": "OrcaSlicer",
+    "description": "Slicer de impresion 3D de codigo abierto (fork de Bambu Studio) con calibraciones avanzadas.",
+    "link": "https://github.com/SoftFever/OrcaSlicer",
+    "winget": "SoftFever.OrcaSlicer",
+    "foss": true
+  },
+  "snapmakerorca": {
+    "category": "Impresion 3D y diseno",
+    "choco": "na",
+    "content": "Snapmaker Orca",
+    "description": "Version de OrcaSlicer optimizada para impresoras Snapmaker.",
+    "link": "https://www.snapmaker.com/",
+    "winget": "Snapmaker.OrcaSlicer",
+    "foss": true
+  },
+  "fusion360": {
+    "category": "Impresion 3D y diseno",
+    "choco": "autodesk-fusion360",
+    "content": "Autodesk Fusion 360",
+    "description": "CAD/CAM 3D de Autodesk. No esta en winget; se instala via Chocolatey (selecciona Chocolatey como gestor).",
+    "link": "https://www.autodesk.com/products/fusion-360",
+    "winget": "na",
+    "foss": false
+  },
+  "blender": {
+    "category": "Impresion 3D y diseno",
+    "choco": "blender",
+    "content": "Blender (3D Graphics)",
+    "description": "Blender is a powerful open-source 3D creation suite, offering modeling, sculpting, animation, and rendering tools.",
+    "link": "https://www.blender.org/",
+    "winget": "BlenderFoundation.Blender",
+    "foss": true
+  },
+  "netbird": {
+    "category": "Redes y VPN",
+    "choco": "netbird",
+    "content": "NetBird",
+    "description": "NetBird is an open-source alternative comparable to TailScale that can be connected to a self-hosted server.",
+    "link": "https://netbird.io/",
+    "winget": "Netbird.Netbird",
+    "foss": true
+  },
+  "tailscale": {
+    "category": "Redes y VPN",
+    "choco": "tailscale",
+    "content": "Tailscale",
+    "description": "VPN mesh basada en WireGuard, zero-config, para conectar tus dispositivos de forma segura.",
+    "link": "https://tailscale.com/",
+    "winget": "Tailscale.Tailscale",
+    "foss": true
+  },
+  "wireguard": {
+    "category": "Redes y VPN",
+    "choco": "wireguard",
+    "content": "WireGuard",
+    "description": "WireGuard is a fast and modern VPN (Virtual Private Network) protocol. It aims to be simpler and more efficient than other VPN protocols, providing secure and reliable connections.",
+    "link": "https://www.wireguard.com/",
+    "winget": "WireGuard.WireGuard",
+    "foss": true
+  },
+  "OpenVPN": {
+    "category": "Redes y VPN",
+    "choco": "openvpn-connect",
+    "content": "OpenVPN Connect",
+    "description": "OpenVPN Connect is a VPN client that allows you to connect securely to a VPN server. It provides a secure and encrypted connection for protecting your online privacy.",
+    "link": "https://openvpn.net/",
+    "winget": "OpenVPNTechnologies.OpenVPNConnect",
+    "foss": false
+  },
+  "winscp": {
+    "category": "Redes y VPN",
+    "choco": "winscp",
+    "content": "WinSCP",
+    "description": "WinSCP is a popular open-source SFTP, FTP, and SCP client for Windows. It allows secure file transfers between a local and a remote computer.",
+    "link": "https://winscp.net/",
+    "winget": "WinSCP.WinSCP",
+    "foss": true
+  },
+  "filezilla": {
+    "category": "Redes y VPN",
+    "choco": "filezilla",
+    "content": "FileZilla",
+    "description": "Cliente FTP/SFTP/FTPS de codigo abierto, rapido y confiable.",
+    "link": "https://filezilla-project.org/",
+    "winget": "na",
+    "foss": true
+  },
+  "putty": {
+    "category": "Redes y VPN",
+    "choco": "putty",
+    "content": "PuTTY",
+    "description": "PuTTY is a free and open-source terminal emulator, serial console, and network file transfer application. It supports various network protocols such as SSH, Telnet, and SCP.",
+    "link": "https://www.chiark.greenend.org.uk/~sgtatham/putty/",
+    "winget": "PuTTY.PuTTY",
+    "foss": true
+  },
+  "protonpass": {
+    "category": "Contrasenas y seguridad",
+    "choco": "protonpass",
+    "content": "Proton Pass",
+    "description": "Proton Pass is a cloud-based password manager with end-to-end encryption and unique email aliases.",
+    "link": "https://proton.me/pass",
+    "winget": "Proton.ProtonPass",
+    "foss": true
+  },
+  "bitwarden": {
+    "category": "Contrasenas y seguridad",
+    "choco": "bitwarden",
+    "content": "Bitwarden",
+    "description": "Bitwarden is an open-source password management solution. It allows users to store and manage their passwords in a secure and encrypted vault, accessible across multiple devices.",
+    "link": "https://bitwarden.com/",
+    "winget": "Bitwarden.Bitwarden",
+    "foss": true
+  },
+  "1password": {
+    "category": "Contrasenas y seguridad",
+    "choco": "1password",
+    "content": "1Password",
+    "description": "1Password is a password manager that allows you to store and manage your passwords securely.",
+    "link": "https://1password.com/",
+    "winget": "AgileBits.1Password",
+    "foss": false
+  },
+  "claude": {
+    "category": "Inteligencia Artificial",
+    "choco": "claude",
+    "content": "Claude Desktop",
+    "description": "Anthropic's Claude desktop application for focused AI-assisted work and chat.",
+    "link": "https://claude.ai/download",
+    "winget": "Anthropic.Claude",
+    "foss": false
+  },
+  "chatgpt": {
+    "category": "Inteligencia Artificial",
+    "choco": "na",
+    "content": "ChatGPT Desktop",
+    "description": "The official ChatGPT desktop app for Windows, distributed through the Microsoft Store.",
+    "link": "https://apps.microsoft.com/detail/9nt1r1c2hh7j",
+    "winget": "msstore:9NT1R1C2HH7J",
+    "foss": false
+  }
+}

@@ -1,0 +1,1704 @@
+{
+  "WPFTweaksActivity": {
+    "Content": "Historial de actividad - Desactivar",
+    "Description": "Borra el historial de documentos recientes, portapapeles y comandos Ejecutar, y evita que Windows lo siga registrando.",
+    "category": "Tweaks esenciales",
+    "panel": "1",
+    "registry": [
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\System",
+        "Name": "EnableActivityFeed",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "<RemoveEntry>"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\System",
+        "Name": "PublishUserActivities",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "<RemoveEntry>"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\System",
+        "Name": "UploadUserActivities",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "<RemoveEntry>"
+      }
+    ]
+  },
+  "WPFTweaksHiber": {
+    "Content": "Hibernacion - Desactivar",
+    "Description": "La hibernacion guarda el contenido de la memoria antes de apagar. Esta pensada para notebooks; en una PC de escritorio conviene desactivarla.",
+    "category": "Tweaks esenciales",
+    "panel": "1",
+    "registry": [
+      {
+        "Path": "HKLM:\\System\\CurrentControlSet\\Control\\Session Manager\\Power",
+        "Name": "HibernateEnabled",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "1"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\FlyoutMenuSettings",
+        "Name": "ShowHibernateOption",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "1"
+      }
+    ],
+    "InvokeScript": [
+      "powercfg.exe /hibernate off"
+    ],
+    "UndoScript": [
+      "powercfg.exe /hibernate on"
+    ]
+  },
+  "WPFTweaksWidget": {
+    "Content": "Widgets - Quitar",
+    "Description": "Quita los widgets (clima/noticias) de la barra de tareas.",
+    "category": "Tweaks esenciales",
+    "panel": "1",
+    "InvokeScript": [
+      "\n      # Sometimes if you dont stop the Widgets process the removal may fail\n\n      Get-Process *Widget* | Stop-Process\n      Get-AppxPackage Microsoft.WidgetsPlatformRuntime -AllUsers | Remove-AppxPackage -AllUsers\n      Get-AppxPackage MicrosoftWindows.Client.WebExperience -AllUsers | Remove-AppxPackage -AllUsers\n\n      Invoke-WinUtilExplorerUpdate -action \"restart\"\n      Write-Host \"Removed widgets\"\n      "
+    ]
+  },
+  "WPFTweaksRevertStartMenu": {
+    "Content": "Menu Inicio clasico (pre-25H2) - Activar",
+    "Description": "Vuelve al diseno anterior del Menu Inicio, previo al despliegue gradual del nuevo en 25H2. En versiones mas nuevas de Windows este tweak NO funciona.",
+    "category": "Tweaks esenciales",
+    "panel": "1",
+    "registry": [
+      {
+        "Path": "HKLM:\\SYSTEM\\ControlSet001\\Control\\FeatureManagement\\Overrides\\8\\3036241548",
+        "Name": "EnabledState",
+        "Value": "1",
+        "Type": "DWord",
+        "OriginalValue": "<RemoveEntry>"
+      }
+    ]
+  },
+  "WPFTweaksDisableStoreSearch": {
+    "Content": "Resultados recomendados de Microsoft Store - Desactivar",
+    "Description": "No muestra apps recomendadas de Microsoft Store al buscar aplicaciones en el Menu Inicio.",
+    "category": "Tweaks esenciales",
+    "panel": "1",
+    "InvokeScript": [
+      "icacls \"$Env:LocalAppData\\Packages\\Microsoft.WindowsStore_8wekyb3d8bbwe\\LocalState\\store.db\" /deny Everyone:F"
+    ],
+    "UndoScript": [
+      "icacls \"$Env:LocalAppData\\Packages\\Microsoft.WindowsStore_8wekyb3d8bbwe\\LocalState\\store.db\" /grant Everyone:F"
+    ]
+  },
+  "WPFTweaksLocation": {
+    "Content": "Rastreo de ubicacion - Desactivar",
+    "Description": "Desactiva el rastreo de ubicacion del sistema.",
+    "category": "Tweaks esenciales",
+    "panel": "1",
+    "service": [
+      {
+        "Name": "lfsvc",
+        "StartupType": "Disable",
+        "OriginalType": "Manual"
+      }
+    ],
+    "registry": [
+      {
+        "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CapabilityAccessManager\\ConsentStore\\location",
+        "Name": "Value",
+        "Value": "Deny",
+        "Type": "String",
+        "OriginalValue": "Allow"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Sensor\\Overrides\\{BFA794E4-F964-4FDB-90F6-51056BFE4B44}",
+        "Name": "SensorPermissionState",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "1"
+      },
+      {
+        "Path": "HKLM:\\SYSTEM\\Maps",
+        "Name": "AutoUpdateEnabled",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "1"
+      }
+    ]
+  },
+  "WPFTweaksServices": {
+    "Content": "Servicios - Poner en manual",
+    "Description": "Pone varios servicios en inicio manual y ajusta SvcHostSplitThresholdInKB segun la memoria del equipo, reduciendo la cantidad de procesos svchost en ejecucion.",
+    "category": "Tweaks esenciales",
+    "panel": "1",
+    "service": [
+      {
+        "Name": "CscService",
+        "StartupType": "Disabled",
+        "OriginalType": "Manual"
+      },
+      {
+        "Name": "DiagTrack",
+        "StartupType": "Disabled",
+        "OriginalType": "Automatic"
+      },
+      {
+        "Name": "MapsBroker",
+        "StartupType": "Manual",
+        "OriginalType": "Automatic"
+      },
+      {
+        "Name": "StorSvc",
+        "StartupType": "Manual",
+        "OriginalType": "Automatic"
+      },
+      {
+        "Name": "SharedAccess",
+        "StartupType": "Disabled",
+        "OriginalType": "Automatic"
+      }
+    ],
+    "InvokeScript": [
+      "\n      $Memory = (Get-CimInstance Win32_PhysicalMemory | Measure-Object Capacity -Sum).Sum / 1KB\n      Set-ItemProperty -Path \"HKLM:\\SYSTEM\\CurrentControlSet\\Control\" -Name SvcHostSplitThresholdInKB -Value $Memory\n      "
+    ]
+  },
+  "WPFTweaksBraveDebloat": {
+    "Content": "Brave - Debloat",
+    "Description": "Desactiva molestias de Brave: Rewards, Leo AI, billetera cripto y VPN.",
+    "category": "z__Tweaks avanzados - PRECAUCION",
+    "panel": "1",
+    "registry": [
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\BraveSoftware\\Brave",
+        "Name": "BraveRewardsDisabled",
+        "Value": "1",
+        "Type": "DWord",
+        "OriginalValue": "<RemoveEntry>"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\BraveSoftware\\Brave",
+        "Name": "BraveWalletDisabled",
+        "Value": "1",
+        "Type": "DWord",
+        "OriginalValue": "<RemoveEntry>"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\BraveSoftware\\Brave",
+        "Name": "BraveVPNDisabled",
+        "Value": "1",
+        "Type": "DWord",
+        "OriginalValue": "<RemoveEntry>"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\BraveSoftware\\Brave",
+        "Name": "BraveAIChatEnabled",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "<RemoveEntry>"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\BraveSoftware\\Brave",
+        "Name": "BraveStatsPingEnabled",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "<RemoveEntry>"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\BraveSoftware\\Brave",
+        "Name": "BraveNewsDisabled",
+        "Value": "1",
+        "Type": "DWord",
+        "OriginalValue": "<RemoveEntry>"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\BraveSoftware\\Brave",
+        "Name": "BraveTalkDisabled",
+        "Value": "1",
+        "Type": "DWord",
+        "OriginalValue": "<RemoveEntry>"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\BraveSoftware\\Brave",
+        "Name": "TorDisabled",
+        "Value": "1",
+        "Type": "DWord",
+        "OriginalValue": "<RemoveEntry>"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\BraveSoftware\\Brave",
+        "Name": "BraveP3AEnabled",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "<RemoveEntry>"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\BraveSoftware\\Brave",
+        "Name": "UrlKeyedAnonymizedDataCollectionEnabled",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "<RemoveEntry>"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\BraveSoftware\\Brave",
+        "Name": "SafeBrowsingExtendedReportingEnabled",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "<RemoveEntry>"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\BraveSoftware\\Brave",
+        "Name": "MetricsReportingEnabled",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "<RemoveEntry>"
+      }
+    ]
+  },
+  "WPFTweaksDisableWarningForUnsignedRdp": {
+    "Content": "Avisos de RDP sin firmar - Desactivar",
+    "Description": "Desactiva las advertencias al abrir archivos RDP sin firmar, introducidas en las ultimas actualizaciones de Windows 10 y 11.",
+    "category": "z__Tweaks avanzados - PRECAUCION",
+    "panel": "1",
+    "registry": [
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows NT\\Terminal Services\\Client",
+        "Name": "RedirectionWarningDialogVersion",
+        "Value": "1",
+        "Type": "DWord",
+        "OriginalValue": "<RemoveEntry>"
+      },
+      {
+        "Path": "HKCU:\\SOFTWARE\\Microsoft\\Terminal Server Client",
+        "Name": "RdpLaunchConsentAccepted",
+        "Value": "1",
+        "Type": "DWord",
+        "OriginalValue": "<RemoveEntry>"
+      }
+    ]
+  },
+  "WPFTweaksEdgeDebloat": {
+    "Content": "Microsoft Edge - Debloat",
+    "Description": "Desactiva telemetria, popups y otras molestias de Microsoft Edge.",
+    "category": "z__Tweaks avanzados - PRECAUCION",
+    "panel": "1",
+    "registry": [
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\EdgeUpdate",
+        "Name": "CreateDesktopShortcutDefault",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "<RemoveEntry>"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "PersonalizationReportingEnabled",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "<RemoveEntry>"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge\\ExtensionInstallBlocklist",
+        "Name": "1",
+        "Value": "ofefcgjbeghpigppfmkologfjadafddi",
+        "Type": "String",
+        "OriginalValue": "<RemoveEntry>"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "ShowRecommendationsEnabled",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "<RemoveEntry>"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "HideFirstRunExperience",
+        "Value": "1",
+        "Type": "DWord",
+        "OriginalValue": "<RemoveEntry>"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "UserFeedbackAllowed",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "<RemoveEntry>"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "ConfigureDoNotTrack",
+        "Value": "1",
+        "Type": "DWord",
+        "OriginalValue": "<RemoveEntry>"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "AlternateErrorPagesEnabled",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "<RemoveEntry>"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "EdgeCollectionsEnabled",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "<RemoveEntry>"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "EdgeShoppingAssistantEnabled",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "<RemoveEntry>"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "MicrosoftEdgeInsiderPromotionEnabled",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "<RemoveEntry>"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "ShowMicrosoftRewards",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "<RemoveEntry>"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "WebWidgetAllowed",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "<RemoveEntry>"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "DiagnosticData",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "<RemoveEntry>"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "EdgeAssetDeliveryServiceEnabled",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "<RemoveEntry>"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "WalletDonationEnabled",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "<RemoveEntry>"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "DefaultBrowserSettingsCampaignEnabled",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "<RemoveEntry>"
+      }
+    ]
+  },
+  "WPFTweaksConsumerFeatures": {
+    "Content": "Apps promocionadas (ConsumerFeatures) - Desactivar",
+    "Description": "Evita la instalacion de apps promocionadas y reduce las sugerencias de contenido de Microsoft Store.",
+    "category": "Tweaks esenciales",
+    "panel": "1",
+    "registry": [
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\CloudContent",
+        "Name": "DisableWindowsConsumerFeatures",
+        "Value": "1",
+        "Type": "DWord",
+        "OriginalValue": "<RemoveEntry>"
+      }
+    ]
+  },
+  "WPFTweaksTelemetry": {
+    "Content": "Telemetria - Desactivar",
+    "Description": "Desactiva la telemetria de Microsoft (envio de datos de uso y diagnostico).",
+    "category": "Tweaks esenciales",
+    "panel": "1",
+    "registry": [
+      {
+        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\AdvertisingInfo",
+        "Name": "Enabled",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "<RemoveEntry>"
+      },
+      {
+        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Privacy",
+        "Name": "TailoredExperiencesWithDiagnosticDataEnabled",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "<RemoveEntry>"
+      },
+      {
+        "Path": "HKCU:\\Software\\Microsoft\\Speech_OneCore\\Settings\\OnlineSpeechPrivacy",
+        "Name": "HasAccepted",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "<RemoveEntry>"
+      },
+      {
+        "Path": "HKCU:\\Software\\Microsoft\\Input\\TIPC",
+        "Name": "Enabled",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "<RemoveEntry>"
+      },
+      {
+        "Path": "HKCU:\\Software\\Microsoft\\InputPersonalization",
+        "Name": "RestrictImplicitInkCollection",
+        "Value": "1",
+        "Type": "DWord",
+        "OriginalValue": "<RemoveEntry>"
+      },
+      {
+        "Path": "HKCU:\\Software\\Microsoft\\InputPersonalization",
+        "Name": "RestrictImplicitTextCollection",
+        "Value": "1",
+        "Type": "DWord",
+        "OriginalValue": "<RemoveEntry>"
+      },
+      {
+        "Path": "HKCU:\\Software\\Microsoft\\InputPersonalization\\TrainedDataStore",
+        "Name": "HarvestContacts",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "<RemoveEntry>"
+      },
+      {
+        "Path": "HKCU:\\Software\\Microsoft\\Personalization\\Settings",
+        "Name": "AcceptedPrivacyPolicy",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "<RemoveEntry>"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\DataCollection",
+        "Name": "AllowTelemetry",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "<RemoveEntry>"
+      },
+      {
+        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+        "Name": "Start_TrackProgs",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "<RemoveEntry>"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\System",
+        "Name": "PublishUserActivities",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "<RemoveEntry>"
+      },
+      {
+        "Path": "HKCU:\\Software\\Microsoft\\Siuf\\Rules",
+        "Name": "NumberOfSIUFInPeriod",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "<RemoveEntry>"
+      }
+    ],
+    "InvokeScript": [
+      "\n      # Disable Defender Auto Sample Submission\n      Set-MpPreference -SubmitSamplesConsent 2\n\n      # Disable (Connected User Experiences and Telemetry) Service\n      Set-Service -Name diagtrack -StartupType Disabled\n\n      # Disable (Windows Error Reporting Manager) Service\n      Set-Service -Name wermgr -StartupType Disabled\n\n      # Disable PowerShell 7 telemetry\n      [Environment]::SetEnvironmentVariable('POWERSHELL_TELEMETRY_OPTOUT', '1', 'Machine')\n\n      Remove-ItemProperty -Path \"HKCU:\\Software\\Microsoft\\Siuf\\Rules\" -Name PeriodInNanoSeconds\n      "
+    ],
+    "UndoScript": [
+      "\n      # Enable Defender Auto Sample Submission\n      Set-MpPreference -SubmitSamplesConsent 1\n\n      # Enable (Connected User Experiences and Telemetry) Service\n      Set-Service -Name diagtrack -StartupType Automatic\n\n      # Enable (Windows Error Reporting Manager) Service\n      Set-Service -Name wermgr -StartupType Automatic\n\n      # Enable PowerShell 7 telemetry\n      [Environment]::SetEnvironmentVariable('POWERSHELL_TELEMETRY_OPTOUT', '', 'Machine')\n      "
+    ]
+  },
+  "WPFTweaksDeliveryOptimization": {
+    "Content": "Optimizacion de entrega - Desactivar",
+    "Description": "Evita que Windows use tu ancho de banda para subir actualizaciones a otras PCs por Internet o red local.",
+    "category": "Tweaks esenciales",
+    "panel": "1",
+    "registry": [
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\DeliveryOptimization",
+        "Name": "DODownloadMode",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "<RemoveEntry>"
+      }
+    ]
+  },
+  "WPFTweaksRemoveEdge": {
+    "Content": "Microsoft Edge - Eliminar",
+    "Description": "Desinstala Microsoft Edge usando el desinstalador oficial (truco del MicrosoftEdge.exe ficticio). PRECAUCION: algunas funciones de Windows dependen de Edge.",
+    "category": "z__Tweaks avanzados - PRECAUCION",
+    "panel": "1",
+    "InvokeScript": [
+      "\n      $Path = Resolve-Path -Path \"$Env:ProgramFiles (x86)\\Microsoft\\Edge\\Application\\*\\Installer\\setup.exe\" | Select-Object -Last 1\n\n      if (Test-Path $Path) {\n          New-Item -Path \"$Env:SystemRoot\\SystemApps\\Microsoft.MicrosoftEdge_8wekyb3d8bbwe\\MicrosoftEdge.exe\" -Force\n          Start-Process -FilePath $Path -ArgumentList \"--uninstall --system-level --force-uninstall --delete-profile\" -Wait\n          Write-Host \"Microsoft Edge was removed\"\n      } else {\n          Write-Host \"Microsoft Edge is not installed\"\n      }\n      "
+    ],
+    "UndoScript": [
+      "\n      Write-Host \"Installing Microsoft Edge...\"\n      winget install Microsoft.Edge --source winget\n      "
+    ]
+  },
+  "WPFTweaksDisableBitLocker": {
+    "Content": "BitLocker - Desactivar",
+    "Description": "Desactiva el cifrado BitLocker y descifra las unidades. PRECAUCION: el proceso puede tardar.",
+    "category": "Tweaks esenciales",
+    "panel": "1",
+    "InvokeScript": [
+      "Disable-BitLocker -MountPoint $Env:SystemDrive"
+    ],
+    "UndoScript": [
+      "Enable-BitLocker -MountPoint $Env:SystemDrive"
+    ]
+  },
+  "WPFTweaksUTC": {
+    "Content": "Reloj en UTC (util para dual boot) - Activar",
+    "Description": "Pone el reloj de hardware en UTC. Esencial para equipos con arranque dual: corrige el desfase horario con Linux.",
+    "category": "z__Tweaks avanzados - PRECAUCION",
+    "panel": "1",
+    "registry": [
+      {
+        "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\TimeZoneInformation",
+        "Name": "RealTimeIsUniversal",
+        "Value": "1",
+        "Type": "QWord",
+        "OriginalValue": "0"
+      }
+    ]
+  },
+  "WPFTweaksRemoveOneDrive": {
+    "Content": "OneDrive - Eliminar",
+    "Description": "Desinstala OneDrive con su propio desinstalador, protegiendo primero los archivos del usuario y restaurando los permisos despues.",
+    "category": "z__Tweaks avanzados - PRECAUCION",
+    "panel": "1",
+    "InvokeScript": [
+      "\n      # Deny permission to remove OneDrive folder\n      icacls $Env:OneDrive /deny \"Administrators:(D,DC)\"\n\n      Write-Host \"Uninstalling OneDrive...\"\n      Start-Process '$Env:SystemRoot\\System32\\OneDriveSetup.exe' -ArgumentList '/uninstall' -Wait\n\n      # Some of OneDrive files use explorer, and OneDrive uses FileCoAuth\n      Write-Host \"Removing leftover OneDrive Files...\"\n\n      Stop-Process -Name FileCoAuth,Explorer\n\n      Remove-Item \"$Env:LocalAppData\\Microsoft\\OneDrive\" -Recurse -Force\n      Remove-Item \"$Env:ProgramData\\Microsoft OneDrive\" -Recurse -Force\n\n      # Grant back permission to access OneDrive folder\n      icacls $Env:OneDrive /grant \"Administrators:(D,DC)\"\n\n      if (-not (Get-ChildItem -Path $Env:OneDrive)) {\n          Remove-Item -Path $Env:OneDrive -Recurse\n          [Environment]::SetEnvironmentVariable('OneDrive', $null, 'User')\n      }\n\n      # Disable OneSyncSvc\n      Set-Service -Name OneSyncSvc -StartupType Disabled\n      "
+    ],
+    "UndoScript": [
+      "\n      Write-Host \"Installing OneDrive\"\n      winget install Microsoft.Onedrive --source winget\n\n      # Enabled OneSyncSvc\n      Set-Service -Name OneSyncSvc -StartupType Automatic\n      "
+    ]
+  },
+  "WPFTweaksRemoveHomeAndGallery": {
+    "Content": "Inicio y Galeria del Explorador - Desactivar",
+    "Description": "Quita Inicio y Galeria del Explorador de archivos y establece Este equipo como vista por defecto.",
+    "category": "z__Tweaks avanzados - PRECAUCION",
+    "panel": "1",
+    "registry": [
+      {
+        "Path": "HKCU:\\Software\\Classes\\CLSID\\{f874310e-b6b7-47dc-bc84-b9e6b38f5903}",
+        "Name": "System.IsPinnedToNameSpaceTree",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "<RemoveEntry>"
+      },
+      {
+        "Path": "HKCU:\\Software\\Classes\\CLSID\\{e88865ea-0e1c-4e20-9aa6-edcd0212c87c}",
+        "Name": "System.IsPinnedToNameSpaceTree",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "<RemoveEntry>"
+      },
+      {
+        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+        "Name": "LaunchTo",
+        "Value": "1",
+        "Type": "DWord",
+        "OriginalValue": "<RemoveEntry>"
+      }
+    ]
+  },
+  "WPFTweaksDisplay": {
+    "Content": "Efectos visuales - Maximo rendimiento",
+    "Description": "Configura los efectos visuales del sistema para maximo rendimiento (equivalente a hacerlo a mano en sysdm.cpl).",
+    "category": "z__Tweaks avanzados - PRECAUCION",
+    "panel": "1",
+    "registry": [
+      {
+        "Path": "HKCU:\\Control Panel\\Desktop",
+        "Name": "DragFullWindows",
+        "Value": "0",
+        "Type": "String",
+        "OriginalValue": "1"
+      },
+      {
+        "Path": "HKCU:\\Control Panel\\Desktop",
+        "Name": "MenuShowDelay",
+        "Value": "200",
+        "Type": "String",
+        "OriginalValue": "400"
+      },
+      {
+        "Path": "HKCU:\\Control Panel\\Desktop\\WindowMetrics",
+        "Name": "MinAnimate",
+        "Value": "0",
+        "Type": "String",
+        "OriginalValue": "1"
+      },
+      {
+        "Path": "HKCU:\\Control Panel\\Keyboard",
+        "Name": "KeyboardDelay",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "1"
+      },
+      {
+        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+        "Name": "ListviewAlphaSelect",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "1"
+      },
+      {
+        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+        "Name": "ListviewShadow",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "1"
+      },
+      {
+        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+        "Name": "TaskbarAnimations",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "1"
+      },
+      {
+        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\VisualEffects",
+        "Name": "VisualFXSetting",
+        "Value": "3",
+        "Type": "DWord",
+        "OriginalValue": "1"
+      },
+      {
+        "Path": "HKCU:\\Software\\Microsoft\\Windows\\DWM",
+        "Name": "EnableAeroPeek",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "1"
+      },
+      {
+        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+        "Name": "TaskbarMn",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "1"
+      },
+      {
+        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+        "Name": "ShowTaskViewButton",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "1"
+      },
+      {
+        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Search",
+        "Name": "SearchboxTaskbarMode",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "1"
+      }
+    ],
+    "InvokeScript": [
+      "Set-ItemProperty -Path \"HKCU:\\Control Panel\\Desktop\" -Name \"UserPreferencesMask\" -Type Binary -Value ([byte[]](144,18,3,128,16,0,0,0))"
+    ],
+    "UndoScript": [
+      "Remove-ItemProperty -Path \"HKCU:\\Control Panel\\Desktop\" -Name \"UserPreferencesMask\""
+    ]
+  },
+  "WPFTweaksReservedStorage": {
+    "Content": "Almacenamiento reservado - Desactivar",
+    "Description": "Desactiva el almacenamiento reservado de Windows (7-10 GB para actualizaciones). Recomendado solo en discos chicos; reactivalo antes de una actualizacion grande de Windows.",
+    "category": "z__Tweaks avanzados - PRECAUCION",
+    "panel": "1",
+    "InvokeScript": [
+      "DISM /Online /Set-ReservedStorageState /State:Disabled"
+    ],
+    "UndoScript": [
+      "DISM /Online /Set-ReservedStorageState /State:Enabled"
+    ]
+  },
+  "WPFTweaksRestorePoint": {
+    "Content": "Punto de restauracion - Crear",
+    "Description": "Crea un punto de restauracion del sistema, por si necesitas revertir cambios hechos con esta herramienta.",
+    "category": "Tweaks esenciales",
+    "panel": "1",
+    "Checked": "False",
+    "registry": [
+      {
+        "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\SystemRestore",
+        "Name": "SystemRestorePointCreationFrequency",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "1440"
+      }
+    ],
+    "InvokeScript": [
+      "\n      if (-not (Get-ComputerRestorePoint)) {\n          Enable-ComputerRestore -Drive $Env:SystemDrive\n      }\n\n      Checkpoint-Computer -Description \"System Restore Point created by WinUtil\" -RestorePointType MODIFY_SETTINGS\n      Write-Host \"System Restore Point Created Successfully\" -ForegroundColor Green\n      "
+    ]
+  },
+  "WPFTweaksEndTaskOnTaskbar": {
+    "Content": "Finalizar tarea con clic derecho - Activar",
+    "Description": "Agrega la opcion 'Finalizar tarea' al hacer clic derecho sobre un programa en la barra de tareas.",
+    "category": "Tweaks esenciales",
+    "panel": "1",
+    "registry": [
+      {
+        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\TaskbarDeveloperSettings",
+        "Name": "TaskbarEndTask",
+        "Value": "1",
+        "Type": "DWord",
+        "OriginalValue": "<RemoveEntry>"
+      }
+    ]
+  },
+  "WPFTweaksStorage": {
+    "Content": "Sensor de almacenamiento - Desactivar",
+    "Description": "Desactiva el Sensor de almacenamiento (borrado automatico de archivos temporales).",
+    "category": "z__Tweaks avanzados - PRECAUCION",
+    "panel": "1",
+    "registry": [
+      {
+        "Path": "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\StorageSense\\Parameters\\StoragePolicy",
+        "Name": "01",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "1"
+      }
+    ]
+  },
+  "WPFTweaksWindowsAI": {
+    "Content": "IA de Windows (Copilot/Recall) - Desactivar y quitar",
+    "Description": "Quita y desactiva todas las funciones y paquetes de IA de Windows (Copilot, Recall, etc.).",
+    "category": "z__Tweaks avanzados - PRECAUCION",
+    "panel": "1",
+    "registry": [
+      {
+        "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer",
+        "Name": "SettingsPageVisibility",
+        "Value": "hide:aicomponents",
+        "Type": "String",
+        "OriginalValue": "<RemoveEntry>"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\WindowsNotepad",
+        "Name": "DisableAIFeatures",
+        "Value": "1",
+        "Type": "DWord",
+        "OriginalValue": "<RemoveEntry>"
+      }
+    ],
+    "InvokeScript": [
+      "\n      $Appx = (Get-AppxPackage MicrosoftWindows.Client.CoreAI).PackageFullName\n      $Sid = (Get-LocalUser $Env:UserName).Sid.Value\n\n      New-Item \"HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Appx\\AppxAllUserStore\\EndOfLife\\$Sid\\$Appx\" -Force\n\n      Get-AppxPackage -AllUsers \"*Copilot*\" | Remove-AppxPackage -AllUsers\n      winget uninstall -e --name \"Copilot\" --silent --force --accept-source-agreements 2>$null\n      Get-AppxPackage -AllUsers Microsoft.MicrosoftOfficeHub | Remove-AppxPackage -AllUsers\n\n      if ($Appx) {\n          Remove-AppxPackage $Appx\n      }\n\n      Set-Service -Name WSAIFabricSvc -StartupType Disabled\n      Disable-WindowsOptionalFeature -FeatureName Recall -Online -NoRestart\n\n      Write-Host \"Windows AI Disabled\"\n      "
+    ]
+  },
+  "WPFTweaksWPBT": {
+    "Content": "Windows Platform Binary Table (WPBT) - Desactivar",
+    "Description": "WPBT permite al fabricante del equipo ejecutar programas en el arranque (anti-robo, drivers, software forzado) sin tu consentimiento. Este tweak lo desactiva.",
+    "category": "Tweaks esenciales",
+    "panel": "1",
+    "registry": [
+      {
+        "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Session Manager",
+        "Name": "DisableWpbtExecution",
+        "Value": "1",
+        "Type": "DWord",
+        "OriginalValue": "<RemoveEntry>"
+      }
+    ]
+  },
+  "WPFTweaksPreventDeviceMetadataFromNetwork": {
+    "Content": "Bloquear apps companion de dispositivos",
+    "Description": "Evita que se instale software adicional al conectar dispositivos (por ejemplo publicidad al enchufar un monitor).",
+    "category": "Tweaks esenciales",
+    "panel": "1",
+    "registry": [
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\Device Metadata",
+        "Name": "PreventDeviceMetadataFromNetwork",
+        "Value": "1",
+        "Type": "DWord",
+        "OriginalValue": "<RemoveEntry>"
+      }
+    ]
+  },
+  "WPFTweaksRazerBlock": {
+    "Content": "Auto-instalacion de software Razer - Desactivar",
+    "Description": "Bloquea TODAS las instalaciones automaticas de software Razer. El hardware funciona perfectamente sin ese software.",
+    "category": "z__Tweaks avanzados - PRECAUCION",
+    "panel": "1",
+    "registry": [
+      {
+        "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\DriverSearching",
+        "Name": "SearchOrderConfig",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "1"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Device Installer",
+        "Name": "DisableCoInstallers",
+        "Value": "1",
+        "Type": "DWord",
+        "OriginalValue": "0"
+      }
+    ],
+    "InvokeScript": [
+      "\n      $RazerPath = \"$Env:SystemRoot\\Installer\\Razer\"\n\n      if (Test-Path $RazerPath) {\n        Remove-Item $RazerPath\\* -Recurse -Force\n      } else {\n        New-Item -Path $RazerPath -ItemType Directory\n      }\n\n      icacls $RazerPath /deny \"Everyone:(W)\"\n      "
+    ],
+    "UndoScript": [
+      "\n      icacls \"$Env:SystemRoot\\Installer\\Razer\" /remove:d Everyone\n      "
+    ]
+  },
+  "WPFTweaksDisableNotifications": {
+    "Content": "Notificaciones y calendario - Desactivar",
+    "Description": "Desactiva todas las notificaciones, INCLUIDO el calendario de la bandeja del sistema.",
+    "category": "z__Tweaks avanzados - PRECAUCION",
+    "panel": "1",
+    "registry": [
+      {
+        "Path": "HKCU:\\Software\\Policies\\Microsoft\\Windows\\Explorer",
+        "Name": "DisableNotificationCenter",
+        "Value": "1",
+        "Type": "DWord",
+        "OriginalValue": "<RemoveEntry>"
+      },
+      {
+        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\PushNotifications",
+        "Name": "ToastEnabled",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "1"
+      }
+    ]
+  },
+  "WPFTweaksBlockAdobeNet": {
+    "Content": "Lista de bloqueo de URLs de Adobe - Activar",
+    "Description": "Bloquea selectivamente conexiones a los servidores de activacion y telemetria de Adobe para reducir interrupciones. Credito: Ruddernation-Designs.",
+    "category": "z__Tweaks avanzados - PRECAUCION",
+    "panel": "1",
+    "InvokeScript": [
+      "\n      $hostsUrl = Invoke-RestMethod -Uri https://github.com/Ruddernation-Designs/Adobe-URL-Block-List/raw/refs/heads/master/hosts\n      Add-Content -Path \"$Env:SystemRoot\\System32\\drivers\\etc\\hosts\" -Value $hostsUrl\n\n      ipconfig /flushdns\n      Write-Host 'Added Adobe url block list from host file'\n      "
+    ],
+    "UndoScript": [
+      "\n      Set-Content \"$Env:SystemRoot\\System32\\drivers\\etc\\hosts\" (\n          (Get-Content \"$Env:SystemRoot\\System32\\drivers\\etc\\hosts\") -join \"`n\" -replace '(?s)#New Ver.*', ''\n      )\n\n      ipconfig /flushdns\n      Write-Host 'Removed Adobe url block list from host file'\n      "
+    ]
+  },
+  "WPFTweaksRightClickMenu": {
+    "Content": "Menu contextual clasico - Activar",
+    "Description": "Restaura el menu contextual clasico del Explorador de archivos, reemplazando el menu simplificado de Windows 11.",
+    "category": "z__Tweaks avanzados - PRECAUCION",
+    "panel": "1",
+    "InvokeScript": [
+      "\n      New-Item -Path \"HKCU:\\Software\\Classes\\CLSID\\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\" -Name InprocServer32 -Value \"\" -Force\n      Stop-Process -Name explorer\n      "
+    ],
+    "UndoScript": [
+      "Remove-Item -Path \"HKCU:\\Software\\Classes\\CLSID\\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\" -Recurse"
+    ]
+  },
+  "WPFTweaksDiskCleanup": {
+    "Content": "Liberador de espacio en disco - Ejecutar",
+    "Description": "Ejecuta el Liberador de espacio en C: y elimina actualizaciones antiguas de Windows.",
+    "category": "Tweaks esenciales",
+    "panel": "1",
+    "InvokeScript": [
+      "\n      cleanmgr.exe /d C: /VERYLOWDISK\n      Dism.exe /online /Cleanup-Image /StartComponentCleanup /ResetBase\n      "
+    ]
+  },
+  "WPFTweaksDeleteTempFiles": {
+    "Content": "Archivos temporales - Eliminar",
+    "Description": "Vacia las carpetas temporales (TEMP) del sistema y del usuario.",
+    "category": "Tweaks esenciales",
+    "panel": "1",
+    "InvokeScript": [
+      "\n      Remove-Item -Path \"$Env:Temp\\*\" -Recurse -Force\n      Remove-Item -Path \"$Env:SystemRoot\\Temp\\*\" -Recurse -Force\n      "
+    ]
+  },
+  "WPFTweaksIPv46": {
+    "Content": "Preferir IPv4 sobre IPv6",
+    "Description": "Prefiere IPv4 sobre IPv6, lo que puede mejorar latencia y seguridad en redes privadas donde IPv6 no esta configurado.",
+    "category": "z__Tweaks avanzados - PRECAUCION",
+    "panel": "1",
+    "registry": [
+      {
+        "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Services\\Tcpip6\\Parameters",
+        "Name": "DisabledComponents",
+        "Value": "32",
+        "Type": "DWord",
+        "OriginalValue": "0"
+      }
+    ]
+  },
+  "WPFTweaksTeredo": {
+    "Content": "Teredo - Desactivar",
+    "Description": "Teredo es un tunel IPv6 que puede agregar latencia. Desactivarlo puede causar problemas en algunos juegos que lo usan.",
+    "category": "z__Tweaks avanzados - PRECAUCION",
+    "panel": "1",
+    "registry": [
+      {
+        "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Services\\Tcpip6\\Parameters",
+        "Name": "DisabledComponents",
+        "Value": "1",
+        "Type": "DWord",
+        "OriginalValue": "0"
+      }
+    ],
+    "InvokeScript": [
+      "netsh interface teredo set state disabled"
+    ],
+    "UndoScript": [
+      "netsh interface teredo set state default"
+    ]
+  },
+  "WPFTweaksDisableIPv6": {
+    "Content": "IPv6 - Desactivar",
+    "Description": "Desactiva IPv6 por completo. PRECAUCION: solo si sabes que tu red no lo necesita.",
+    "category": "z__Tweaks avanzados - PRECAUCION",
+    "panel": "1",
+    "registry": [
+      {
+        "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Services\\Tcpip6\\Parameters",
+        "Name": "DisabledComponents",
+        "Value": "255",
+        "Type": "DWord",
+        "OriginalValue": "0"
+      }
+    ],
+    "InvokeScript": [
+      "Disable-NetAdapterBinding -Name * -ComponentID ms_tcpip6"
+    ],
+    "UndoScript": [
+      "Enable-NetAdapterBinding -Name * -ComponentID ms_tcpip6"
+    ]
+  },
+  "WPFTweaksDisableBGapps": {
+    "Content": "Apps en segundo plano - Desactivar",
+    "Description": "Evita que las apps de Microsoft Store corran en segundo plano (en Windows 11 habria que hacerlo una por una).",
+    "category": "z__Tweaks avanzados - PRECAUCION",
+    "panel": "1",
+    "registry": [
+      {
+        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\BackgroundAccessApplications",
+        "Name": "GlobalUserDisabled",
+        "Value": "1",
+        "Type": "DWord",
+        "OriginalValue": "0"
+      }
+    ]
+  },
+  "WPFTweaksDisableFSO": {
+    "Content": "Optimizaciones de pantalla completa - Desactivar",
+    "Description": "Desactiva las optimizaciones de pantalla completa en todas las aplicaciones. NOTA: desactiva la gestion de color en pantalla completa exclusiva.",
+    "category": "z__Tweaks avanzados - PRECAUCION",
+    "panel": "1",
+    "registry": [
+      {
+        "Path": "HKCU:\\System\\GameConfigStore",
+        "Name": "GameDVR_DXGIHonorFSEWindowsCompatible",
+        "Value": "1",
+        "Type": "DWord",
+        "OriginalValue": "0"
+      }
+    ]
+  },
+  "WPFTweaksDisableExplorerAutoDiscovery": {
+    "Content": "Deteccion automatica de carpetas - Desactivar",
+    "Description": "El Explorador intenta adivinar el tipo de carpeta por su contenido, lo que hace lenta la navegacion. ADVERTENCIA: desactiva el agrupado automatico de carpetas.",
+    "category": "Tweaks esenciales",
+    "panel": "1",
+    "InvokeScript": [
+      "\n      # Previously detected folders\n      $bags = \"HKCU:\\Software\\Classes\\Local Settings\\Software\\Microsoft\\Windows\\Shell\\Bags\"\n\n      # Folder types lookup table\n      $bagMRU = \"HKCU:\\Software\\Classes\\Local Settings\\Software\\Microsoft\\Windows\\Shell\\BagMRU\"\n\n      # Flush Explorer view database\n      Remove-Item -Path $bags -Recurse -Force\n      Write-Host \"Removed $bags\"\n\n      Remove-Item -Path $bagMRU -Recurse -Force\n      Write-Host \"Removed $bagMRU\"\n\n      # Every folder\n      $allFolders = \"HKCU:\\Software\\Classes\\Local Settings\\Software\\Microsoft\\Windows\\Shell\\Bags\\AllFolders\\Shell\"\n\n      if (!(Test-Path $allFolders)) {\n        New-Item -Path $allFolders -Force\n        Write-Host \"Created $allFolders\"\n      }\n\n      # Generic view\n      New-ItemProperty -Path $allFolders -Name \"FolderType\" -Value \"NotSpecified\" -PropertyType String -Force\n      Write-Host \"Set FolderType to NotSpecified\"\n\n      Write-Host Please sign out and back in, or restart your computer to apply the changes!\n      "
+    ],
+    "UndoScript": [
+      "\n      # Previously detected folders\n      $bags = \"HKCU:\\Software\\Classes\\Local Settings\\Software\\Microsoft\\Windows\\Shell\\Bags\"\n\n      # Folder types lookup table\n      $bagMRU = \"HKCU:\\Software\\Classes\\Local Settings\\Software\\Microsoft\\Windows\\Shell\\BagMRU\"\n\n      # Flush Explorer view database\n      Remove-Item -Path $bags -Recurse -Force\n      Write-Host \"Removed $bags\"\n\n      Remove-Item -Path $bagMRU -Recurse -Force\n      Write-Host \"Removed $bagMRU\"\n\n      Write-Host Please sign out and back in, or restart your computer to apply the changes!\n      "
+    ]
+  },
+  "WPFToggleDetailedBSoD": {
+    "Content": "Pantalla azul detallada (BSoD)",
+    "Description": "Muestra informacion detallada cuando aparece una pantalla azul.",
+    "category": "Personalizacion",
+    "panel": "2",
+    "Type": "Toggle",
+    "registry": [
+      {
+        "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\CrashControl",
+        "Name": "DisplayParameters",
+        "Value": "1",
+        "Type": "DWord",
+        "OriginalValue": "0",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\CrashControl",
+        "Name": "DisableEmoticon",
+        "Value": "1",
+        "Type": "DWord",
+        "OriginalValue": "0",
+        "DefaultState": "false"
+      }
+    ]
+  },
+  "WPFToggleBatteryPercentage": {
+    "Content": "Porcentaje de bateria en bandeja",
+    "Description": "Muestra el porcentaje numerico de bateria junto al icono en la bandeja del sistema.",
+    "category": "Personalizacion",
+    "panel": "2",
+    "Type": "Toggle",
+    "registry": [
+      {
+        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+        "Name": "IsBatteryPercentageEnabled",
+        "Value": "1",
+        "Type": "DWord",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      }
+    ]
+  },
+  "WPFToggleDarkMode": {
+    "Content": "Tema oscuro de Windows",
+    "Description": "Tema oscuro para el sistema y las aplicaciones.",
+    "category": "Personalizacion",
+    "panel": "2",
+    "Type": "Toggle",
+    "registry": [
+      {
+        "Path": "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize",
+        "Name": "AppsUseLightTheme",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "1",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize",
+        "Name": "SystemUsesLightTheme",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "1",
+        "DefaultState": "false"
+      }
+    ],
+    "InvokeScript": [
+      "\n      Invoke-WinUtilExplorerUpdate\n      if ($sync.ThemeButton.Content -eq [char]0xF08C) {\n        Invoke-WinutilThemeChange -theme \"Auto\"\n      }\n      "
+    ],
+    "UndoScript": [
+      "\n      Invoke-WinUtilExplorerUpdate\n      if ($sync.ThemeButton.Content -eq [char]0xF08C) {\n        Invoke-WinutilThemeChange -theme \"Auto\"\n      }\n      "
+    ]
+  },
+  "WPFToggleShowExt": {
+    "Content": "Mostrar extensiones de archivo",
+    "Description": "Muestra las extensiones de archivo en el Explorador (.exe, .png, etc.).",
+    "category": "Personalizacion",
+    "panel": "2",
+    "Type": "Toggle",
+    "registry": [
+      {
+        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+        "Name": "HideFileExt",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "1",
+        "DefaultState": "false"
+      }
+    ],
+    "InvokeScript": [
+      "\n      Invoke-WinUtilExplorerUpdate -action \"restart\"\n      "
+    ],
+    "UndoScript": [
+      "\n      Invoke-WinUtilExplorerUpdate -action \"restart\"\n      "
+    ]
+  },
+  "WPFToggleHiddenFiles": {
+    "Content": "Mostrar archivos ocultos",
+    "Description": "Muestra los archivos ocultos en el Explorador.",
+    "category": "Personalizacion",
+    "panel": "2",
+    "Type": "Toggle",
+    "registry": [
+      {
+        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+        "Name": "Hidden",
+        "Value": "1",
+        "Type": "DWord",
+        "OriginalValue": "0",
+        "DefaultState": "false"
+      }
+    ],
+    "InvokeScript": [
+      "\n      Invoke-WinUtilExplorerUpdate -action \"restart\"\n      "
+    ],
+    "UndoScript": [
+      "\n      Invoke-WinUtilExplorerUpdate -action \"restart\"\n      "
+    ]
+  },
+  "WPFToggleVerboseLogon": {
+    "Content": "Inicio de sesion detallado",
+    "Description": "Muestra mensajes detallados durante el inicio y apagado del sistema.",
+    "category": "Personalizacion",
+    "panel": "2",
+    "Type": "Toggle",
+    "registry": [
+      {
+        "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System",
+        "Name": "VerboseStatus",
+        "Value": "1",
+        "Type": "DWord",
+        "OriginalValue": "0",
+        "DefaultState": "false"
+      }
+    ]
+  },
+  "WPFToggleNewOutlook": {
+    "Content": "Nuevo Outlook",
+    "Description": "Activado usa el nuevo Outlook; desactivado asegura que se use el Outlook clasico.",
+    "category": "Personalizacion",
+    "panel": "2",
+    "Type": "Toggle",
+    "registry": [
+      {
+        "Path": "HKCU:\\SOFTWARE\\Microsoft\\Office\\16.0\\Outlook\\Preferences",
+        "Name": "UseNewOutlook",
+        "Value": "1",
+        "Type": "DWord",
+        "OriginalValue": "0",
+        "DefaultState": "true"
+      },
+      {
+        "Path": "HKCU:\\Software\\Microsoft\\Office\\16.0\\Outlook\\Options\\General",
+        "Name": "HideNewOutlookToggle",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "1",
+        "DefaultState": "true"
+      },
+      {
+        "Path": "HKCU:\\Software\\Policies\\Microsoft\\Office\\16.0\\Outlook\\Options\\General",
+        "Name": "DoNewOutlookAutoMigration",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "0",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKCU:\\Software\\Policies\\Microsoft\\Office\\16.0\\Outlook\\Preferences",
+        "Name": "NewOutlookMigrationUserSetting",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "true"
+      }
+    ]
+  },
+  "WPFToggleScrollbars": {
+    "Content": "Barras de desplazamiento siempre visibles",
+    "Description": "Activado, las barras de desplazamiento quedan siempre visibles; desactivado, Windows las oculta cuando no se usan.",
+    "category": "Personalizacion",
+    "panel": "2",
+    "Type": "Toggle",
+    "registry": [
+      {
+        "Path": "HKCU:\\Control Panel\\Accessibility",
+        "Name": "DynamicScrollbars",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "1",
+        "DefaultState": "false",
+        "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/scrollbars"
+      }
+    ]
+  },
+  "WPFToggleMultiplaneOverlay": {
+    "Content": "Multiplane Overlay (MPO)",
+    "Description": "MPO compone varias capas de imagen por hardware; a veces causa parpadeos o problemas con algunas placas de video.",
+    "category": "Personalizacion",
+    "panel": "2",
+    "Type": "Toggle",
+    "registry": [
+      {
+        "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\Dwm",
+        "Name": "OverlayTestMode",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "5",
+        "DefaultState": "true"
+      },
+      {
+        "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers",
+        "Name": "DisableOverlays",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "1",
+        "DefaultState": "true"
+      }
+    ]
+  },
+  "WPFToggleMouseAcceleration": {
+    "Content": "Aceleracion del mouse",
+    "Description": "Hace que el movimiento del cursor dependa de la velocidad con la que moves el mouse fisico.",
+    "category": "Personalizacion",
+    "panel": "2",
+    "Type": "Toggle",
+    "registry": [
+      {
+        "Path": "HKCU:\\Control Panel\\Mouse",
+        "Name": "MouseSpeed",
+        "Value": "1",
+        "Type": "DWord",
+        "OriginalValue": "0",
+        "DefaultState": "true"
+      },
+      {
+        "Path": "HKCU:\\Control Panel\\Mouse",
+        "Name": "MouseThreshold1",
+        "Value": "6",
+        "Type": "DWord",
+        "OriginalValue": "0",
+        "DefaultState": "true"
+      },
+      {
+        "Path": "HKCU:\\Control Panel\\Mouse",
+        "Name": "MouseThreshold2",
+        "Value": "10",
+        "Type": "DWord",
+        "OriginalValue": "0",
+        "DefaultState": "true"
+      }
+    ]
+  },
+  "WPFToggleNumLock": {
+    "Content": "Num Lock al iniciar",
+    "Description": "Activa o desactiva el Num Lock al iniciar el equipo.",
+    "category": "Personalizacion",
+    "panel": "2",
+    "Type": "Toggle",
+    "registry": [
+      {
+        "Path": "HKU:\\.Default\\Control Panel\\Keyboard",
+        "Name": "InitialKeyboardIndicators",
+        "Value": "2",
+        "Type": "String",
+        "OriginalValue": "0",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKCU:\\Control Panel\\Keyboard",
+        "Name": "InitialKeyboardIndicators",
+        "Value": "2",
+        "Type": "String",
+        "OriginalValue": "0",
+        "DefaultState": "false"
+      }
+    ]
+  },
+  "WPFToggleWindowSnapping": {
+    "Content": "Ajuste de ventanas (Snap)",
+    "Description": "Activa o desactiva el ajuste automatico de ventanas al arrastrarlas a los bordes (Snap).",
+    "category": "Personalizacion",
+    "panel": "2",
+    "Type": "Toggle",
+    "registry": [
+      {
+        "Path": "HKCU:\\Control Panel\\Desktop",
+        "Name": "WindowArrangementActive",
+        "Value": "1",
+        "Type": "String",
+        "OriginalValue": "0",
+        "DefaultState": "true"
+      }
+    ]
+  },
+  "WPFToggleStandbyFix": {
+    "Content": "Red en suspension moderna (S0)",
+    "Description": "Controla la conectividad de red durante la suspension moderna S0 (bajo consumo en notebooks nuevas).",
+    "category": "Personalizacion",
+    "panel": "2",
+    "Type": "Toggle",
+    "registry": [
+      {
+        "Path": "HKCU:\\SOFTWARE\\Policies\\Microsoft\\Power\\PowerSettings\\f15576e8-98b7-4186-b944-eafa664402d9",
+        "Name": "ACSettingIndex",
+        "Value": "1",
+        "Type": "DWord",
+        "OriginalValue": "0",
+        "DefaultState": "true"
+      }
+    ]
+  },
+  "WPFToggleS3Sleep": {
+    "Content": "Suspension S3",
+    "Description": "Alterna entre suspension moderna y suspension S3, que corta la energia del CPU manteniendo la memoria.",
+    "category": "Personalizacion",
+    "panel": "2",
+    "Type": "Toggle",
+    "registry": [
+      {
+        "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Power",
+        "Name": "PlatformAoAcOverride",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      }
+    ]
+  },
+  "WPFToggleHideSettingsHome": {
+    "Content": "Pagina de inicio de Configuracion",
+    "Description": "Muestra u oculta la pagina de inicio de la app Configuracion de Windows.",
+    "category": "Personalizacion",
+    "panel": "2",
+    "Type": "Toggle",
+    "registry": [
+      {
+        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer",
+        "Name": "SettingsPageVisibility",
+        "Value": "show:home",
+        "Type": "String",
+        "OriginalValue": "hide:home",
+        "DefaultState": "true"
+      }
+    ]
+  },
+  "WPFToggleBingSearch": {
+    "Content": "Busqueda con Bing en el Menu Inicio",
+    "Description": "Activa o desactiva los resultados web de Bing en la busqueda de Windows.",
+    "category": "Personalizacion",
+    "panel": "2",
+    "Type": "Toggle",
+    "registry": [
+      {
+        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Search",
+        "Name": "BingSearchEnabled",
+        "Value": "1",
+        "Type": "DWord",
+        "OriginalValue": "0",
+        "DefaultState": "true"
+      }
+    ]
+  },
+  "WPFToggleLoginBlur": {
+    "Content": "Desenfoque en pantalla de inicio de sesion",
+    "Description": "Activa o desactiva el desenfoque acrilico del fondo en la pantalla de inicio de sesion.",
+    "category": "Personalizacion",
+    "panel": "2",
+    "Type": "Toggle",
+    "registry": [
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\System",
+        "Name": "DisableAcrylicBackgroundOnLogon",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "1",
+        "DefaultState": "true"
+      }
+    ]
+  },
+  "WPFTweaksDisableLockscreen": {
+    "Content": "Pantalla de bloqueo - Desactivar",
+    "Description": "Salta la pantalla de bloqueo y va directo a la pantalla de inicio de sesion al arrancar o despertar.",
+    "category": "Personalizacion",
+    "panel": "2",
+    "Type": "Toggle",
+    "registry": [
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\Personalization",
+        "Name": "NoLockScreen",
+        "Value": "1",
+        "Type": "DWord",
+        "OriginalValue": "<RemoveEntry>"
+      }
+    ]
+  },
+  "WPFToggleStartMenuRecommendations": {
+    "Content": "Recomendaciones del Menu Inicio",
+    "Description": "Muestra u oculta la seccion de recomendaciones del Menu Inicio. ADVERTENCIA: tambien desactiva Windows Spotlight en la pantalla de bloqueo.",
+    "category": "Personalizacion",
+    "panel": "2",
+    "Type": "Toggle",
+    "registry": [
+      {
+        "Path": "HKLM:\\SOFTWARE\\Microsoft\\PolicyManager\\current\\device\\Start",
+        "Name": "HideRecommendedSection",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "1",
+        "DefaultState": "true"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Microsoft\\PolicyManager\\current\\device\\Education",
+        "Name": "IsEducationEnvironment",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "1",
+        "DefaultState": "true"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\Explorer",
+        "Name": "HideRecommendedSection",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "1",
+        "DefaultState": "true"
+      }
+    ],
+    "InvokeScript": [
+      "\n      Invoke-WinUtilExplorerUpdate -action \"restart\"\n      "
+    ],
+    "UndoScript": [
+      "\n      Invoke-WinUtilExplorerUpdate -action \"restart\"\n      "
+    ]
+  },
+  "WPFToggleStickyKeys": {
+    "Content": "Teclas especiales (Sticky Keys)",
+    "Description": "Activa o desactiva las Teclas especiales (se disparan al apretar Shift varias veces seguidas).",
+    "category": "Personalizacion",
+    "panel": "2",
+    "Type": "Toggle",
+    "registry": [
+      {
+        "Path": "HKCU:\\Control Panel\\Accessibility\\StickyKeys",
+        "Name": "Flags",
+        "Value": "506",
+        "Type": "DWord",
+        "OriginalValue": "58",
+        "DefaultState": "true"
+      }
+    ]
+  },
+  "WPFToggleTaskbarAlignment": {
+    "Content": "Iconos centrados en barra de tareas",
+    "Description": "Alinea los iconos de la barra de tareas al centro o a la izquierda.",
+    "category": "Personalizacion",
+    "panel": "2",
+    "Type": "Toggle",
+    "registry": [
+      {
+        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+        "Name": "TaskbarAl",
+        "Value": "1",
+        "Type": "DWord",
+        "OriginalValue": "0",
+        "DefaultState": "true"
+      }
+    ],
+    "InvokeScript": [
+      "\n      Invoke-WinUtilExplorerUpdate -action \"restart\"\n      "
+    ],
+    "UndoScript": [
+      "\n      Invoke-WinUtilExplorerUpdate -action \"restart\"\n      "
+    ]
+  },
+  "WPFToggleTaskbarSearch": {
+    "Content": "Icono de busqueda en barra de tareas",
+    "Description": "Muestra u oculta el boton de busqueda de la barra de tareas.",
+    "category": "Personalizacion",
+    "panel": "2",
+    "Type": "Toggle",
+    "registry": [
+      {
+        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Search",
+        "Name": "SearchboxTaskbarMode",
+        "Value": "1",
+        "Type": "DWord",
+        "OriginalValue": "0",
+        "DefaultState": "true"
+      }
+    ]
+  },
+  "WPFToggleTaskView": {
+    "Content": "Icono de vista de tareas",
+    "Description": "Muestra u oculta el boton de vista de tareas de la barra de tareas.",
+    "category": "Personalizacion",
+    "panel": "2",
+    "Type": "Toggle",
+    "registry": [
+      {
+        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+        "Name": "ShowTaskViewButton",
+        "Value": "1",
+        "Type": "DWord",
+        "OriginalValue": "0",
+        "DefaultState": "true"
+      }
+    ]
+  },
+  "WPFToggleGameMode": {
+    "Content": "Modo juego",
+    "Description": "Hace que Windows priorice el rendimiento en juegos asignandoles mas recursos del sistema.",
+    "category": "Personalizacion",
+    "panel": "2",
+    "Type": "Toggle",
+    "registry": [
+      {
+        "Path": "HKCU:\\Software\\Microsoft\\GameBar",
+        "Name": "AllowAutoGameMode",
+        "Value": "1",
+        "Type": "DWord",
+        "OriginalValue": "0",
+        "DefaultState": "true"
+      },
+      {
+        "Path": "HKCU:\\Software\\Microsoft\\GameBar",
+        "Name": "AutoGameModeEnabled",
+        "Value": "1",
+        "Type": "DWord",
+        "OriginalValue": "0",
+        "DefaultState": "true"
+      }
+    ]
+  },
+  "WPFToggleLongPaths": {
+    "Content": "Rutas largas (Long Paths)",
+    "Description": "Habilita rutas de archivo de mas de 260 caracteres en el Explorador.",
+    "category": "Personalizacion",
+    "panel": "2",
+    "Type": "Toggle",
+    "registry": [
+      {
+        "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\FileSystem",
+        "Name": "LongPathsEnabled",
+        "Value": "1",
+        "Type": "DWord",
+        "OriginalValue": "0",
+        "DefaultState": "false"
+      }
+    ]
+  },
+  "WPFOOSUbutton": {
+    "Content": "O&O ShutUp10++ - Ejecutar",
+    "category": "z__Tweaks avanzados - PRECAUCION",
+    "panel": "1",
+    "Type": "Button",
+    "Description": "Ejecuta O&O ShutUp10++, una herramienta externa de privacidad para Windows."
+  },
+  "WPFchangedns": {
+    "Content": "DNS - Cambiar a:",
+    "category": "z__Tweaks avanzados - PRECAUCION",
+    "panel": "1",
+    "Type": "Combobox",
+    "ComboItems": "Default DHCP Google Cloudflare Cloudflare_Malware Cloudflare_Malware_Adult Open_DNS Quad9 AdGuard_Ads_Trackers AdGuard_Ads_Trackers_Malware_Adult",
+    "Description": "Cambia los servidores DNS del equipo por el proveedor elegido."
+  },
+  "WPFAddUltPerf": {
+    "Content": "Plan Maximo rendimiento - Activar",
+    "category": "Planes de energia - NO PARA NOTEBOOKS",
+    "panel": "2",
+    "Type": "Button",
+    "ButtonWidth": "300",
+    "Description": "Agrega y activa el plan de energia Maximo rendimiento de Windows. No recomendado en notebooks."
+  },
+  "WPFRemoveUltPerf": {
+    "Content": "Plan Maximo rendimiento - Desactivar",
+    "category": "Planes de energia - NO PARA NOTEBOOKS",
+    "panel": "2",
+    "Type": "Button",
+    "ButtonWidth": "300",
+    "Description": "Quita el plan de energia Maximo rendimiento."
+  },
+  "WPFTweaksClassicPhotoViewer": {
+    "Content": "Visor de fotos clasico de Windows - Restaurar",
+    "Description": "Restaura el Visor de fotos de Windows clasico como programa para abrir imagenes (bmp, gif, jpg, png, tiff, etc.). Se puede revertir con Deshacer.",
+    "category": "Tweaks esenciales",
+    "panel": "1",
+    "InvokeScript": [
+      "\n      $extensions = @('.bmp','.gif','.jpg','.jpeg','.jpe','.jfif','.png','.tif','.tiff','.ico')\n      foreach ($ext in $extensions) {\n          $keyPath = \"HKCU:\\SOFTWARE\\Classes\\$ext\"\n          New-Item -Path $keyPath -Force | Out-Null\n          Set-ItemProperty -Path $keyPath -Name '(Default)' -Value 'PhotoViewer.FileAssoc.Tiff'\n      }\n      Write-Host 'Visor de fotos clasico restaurado. Si alguna imagen no abre con el visor, usa Abrir con > Visor de fotos de Windows.'\n      "
+    ],
+    "UndoScript": [
+      "\n      $extensions = @('.bmp','.gif','.jpg','.jpeg','.jpe','.jfif','.png','.tif','.tiff','.ico')\n      foreach ($ext in $extensions) {\n          Remove-Item -Path \"HKCU:\\SOFTWARE\\Classes\\$ext\" -Force -ErrorAction SilentlyContinue\n      }\n      Write-Host 'Asociaciones del Visor de fotos clasico eliminadas.'\n      "
+    ]
+  },
+  "WPFTweaksDisableFastStartup": {
+    "Content": "Inicio rapido (Fast Startup) - Desactivar",
+    "Description": "Desactiva el Inicio rapido de Windows. Evita problemas con dual boot, actualizaciones y hardware que no reinicia del todo; el apagado pasa a ser un apagado real.",
+    "category": "Tweaks esenciales",
+    "panel": "1",
+    "registry": [
+      {
+        "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Power",
+        "Name": "HiberbootEnabled",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "1"
+      }
+    ]
+  },
+  "WPFTweaksDisableGameDVR": {
+    "Content": "Xbox Game Bar / GameDVR - Desactivar",
+    "Description": "Desactiva la grabacion en segundo plano de Xbox Game Bar (GameDVR), que consume recursos mientras jugas. Distinto del Modo juego.",
+    "category": "Tweaks esenciales",
+    "panel": "1",
+    "registry": [
+      {
+        "Path": "HKCU:\\System\\GameConfigStore",
+        "Name": "GameDVR_Enabled",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "1"
+      },
+      {
+        "Path": "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\GameDVR",
+        "Name": "AppCaptureEnabled",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "1"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\GameDVR",
+        "Name": "AllowGameDVR",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "<RemoveEntry>"
+      }
+    ]
+  },
+  "WPFTweaksDisableSearchHighlights": {
+    "Content": "Destacados de busqueda - Desactivar",
+    "Description": "Quita los dibujos y contenido promocionado (Search Highlights) del cuadro de busqueda de la barra de tareas.",
+    "category": "Tweaks esenciales",
+    "panel": "1",
+    "registry": [
+      {
+        "Path": "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\SearchSettings",
+        "Name": "IsDynamicSearchBoxEnabled",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "1"
+      }
+    ]
+  },
+  "WPFTweaksDisableExplorerAds": {
+    "Content": "Anuncios del Explorador - Desactivar",
+    "Description": "Desactiva las notificaciones de proveedores de sincronizacion en el Explorador (publicidad de OneDrive y Office).",
+    "category": "Tweaks esenciales",
+    "panel": "1",
+    "registry": [
+      {
+        "Path": "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+        "Name": "ShowSyncProviderNotifications",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "1"
+      }
+    ]
+  },
+  "WPFTweaksWallpaperQuality": {
+    "Content": "Calidad del fondo de pantalla al 100%",
+    "Description": "Windows comprime el fondo de pantalla a calidad 85%. Este tweak lo deja al 100% (el cambio se ve al volver a aplicar el fondo).",
+    "category": "Tweaks esenciales",
+    "panel": "1",
+    "registry": [
+      {
+        "Path": "HKCU:\\Control Panel\\Desktop",
+        "Name": "JPEGImportQuality",
+        "Value": "100",
+        "Type": "DWord",
+        "OriginalValue": "<RemoveEntry>"
+      }
+    ]
+  }
+}

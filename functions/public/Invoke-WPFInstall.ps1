@@ -1,0 +1,76 @@
+function Invoke-WPFInstall {
+    <#
+    .SYNOPSIS
+        Installs the selected programs using winget, if one or more of the selected programs are already installed on the system, winget will try and perform an upgrade if there's a newer version to install.
+    #>
+
+    $PackagesToInstall = $sync.selectedApps | Foreach-Object { $sync.configs.applicationsHashtable.$_ }
+
+
+    if($sync.ProcessRunning) {
+        $msg = "[Invoke-WPFInstall] An Install process is currently running."
+        Show-WinUtilMessage -Message $msg -Title "Winutil" -Button "OK" -Icon "Warning"
+        return
+    }
+
+    if ($PackagesToInstall.Count -eq 0) {
+        $WarningMsg = "Please select the program(s) to install or upgrade."
+        Show-WinUtilMessage -Message $WarningMsg -Title $AppTitle -Button "OK" -Icon "Warning"
+        return
+    }
+
+    $ManagerPreference = $sync.preferences.packagemanager
+    Write-WinUtilLog -Component "Install" -Message "Install requested for $(@($PackagesToInstall).Count) selected package(s) using preference: $ManagerPreference"
+    $packageSummary = Get-WinUtilPackageLogSummary -Packages $PackagesToInstall -Preference $ManagerPreference
+    Write-WinUtilLog -Component "Install" -Message "Install selected package(s): $($packageSummary -join '; ')"
+
+    Invoke-WPFRunspace -ParameterList @(("PackagesToInstall", $PackagesToInstall),("ManagerPreference", $ManagerPreference)) -ScriptBlock {
+        param($PackagesToInstall, $ManagerPreference)
+
+        $packagesSorted = Get-WinUtilSelectedPackages -PackageList $PackagesToInstall -Preference $ManagerPreference
+
+        $packagesWinget = $packagesSorted['Winget']
+        $packagesChoco = $packagesSorted['Choco']
+        Write-WinUtilLog -Component "Install" -Message "Install package manager split: winget=$(@($packagesWinget).Count), choco=$(@($packagesChoco).Count)"
+
+        try {
+            $sync.ProcessRunning = $true
+            if($packagesWinget.Count -gt 0 -and $packagesWinget -ne "0") {
+                Show-WPFInstallAppBusy -text "Instalando aplicaciones..."
+                Install-WinUtilWinget
+                $failedWinget = Install-WinUtilProgramWinget -Action Install -Programs $packagesWinget
+
+                # Fallback: lo que fallo con winget se reintenta con Chocolatey si tiene paquete choco
+                if ($failedWinget.Count -gt 0) {
+                    foreach ($failedId in $failedWinget) {
+                        $pkg = $PackagesToInstall | Where-Object { $_.winget -eq $failedId } | Select-Object -First 1
+                        if ($pkg -and -not [string]::IsNullOrWhiteSpace([string]$pkg.choco) -and $pkg.choco -ne "na" -and -not $packagesChoco.Contains($pkg.choco)) {
+                            Write-WinUtilLog -Component "Install" -Message "winget fallo para '$failedId'; se reintenta con Chocolatey ($($pkg.choco))"
+                            $null = $packagesChoco.Add($pkg.choco)
+                        }
+                    }
+                }
+            }
+            if($packagesChoco.Count -gt 0) {
+                Install-WinUtilChoco
+                Install-WinUtilProgramChoco -Action Install -Programs $packagesChoco
+            }
+            Hide-WPFInstallAppBusy
+            Set-WinUtilProgressbar -Label "Instalacion finalizada" -Percent 100
+            Write-Host "==========================================="
+            Write-Host "--      Instalaciones finalizadas       ---"
+            Write-Host "==========================================="
+            Write-WinUtilLog -Component "Install" -Message "Install workflow completed."
+            Invoke-WPFUIThread -ScriptBlock { Set-WinUtilTaskbaritem -state "None" -overlay "checkmark" }
+        } catch {
+            Hide-WPFInstallAppBusy
+            Write-Host "==========================================="
+            Write-Host "Error: $_"
+            Write-Host "==========================================="
+            Write-WinUtilLog -Level "ERROR" -Component "Install" -Message "Install workflow failed: $($_.Exception.Message)"
+            Invoke-WPFUIThread -ScriptBlock { Set-WinUtilTaskbaritem -state "Error" -overlay "warning" }
+        } finally {
+            $sync.ProcessRunning = $False
+        }
+    }
+}

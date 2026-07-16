@@ -1,0 +1,7 @@
+# Artefacto generado por Compile.ps1
+liadevtech.ps1
+liadevtech.exe
+
+# Logs y temporales
+*.log
+logs/
