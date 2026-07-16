@@ -81,8 +81,9 @@ if ($pushExit -ne 0) {
 $version = Get-Date -Format 'yy.MM.dd'
 $tag = "v$version"
 
-# Si el tag del dia ya existe, agregar un sufijo incremental
-$existentes = & $gh release list --limit 100 2>$null | ForEach-Object { ($_ -split "`t")[0] }
+# Si el tag del dia ya existe, agregar un sufijo incremental (.1, .2, ...)
+# Usamos salida JSON porque el formato de columnas de 'gh release list' no es estable.
+$existentes = @(& $gh release list --limit 200 --json tagName --jq '.[].tagName' 2>$null)
 if ($existentes -contains $tag) {
     $n = 1
     while ($existentes -contains "$tag.$n") { $n++ }
