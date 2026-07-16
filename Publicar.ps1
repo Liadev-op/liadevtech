@@ -52,21 +52,29 @@ if ($errs.Count -gt 0) {
 }
 
 # 2. Commit + push
-# git escribe informacion normal a stderr; lo redirigimos para que no aborte el script
+# git escribe informacion normal a stderr (avisos LF/CRLF, progreso de push).
+# Con ErrorActionPreference=Stop eso abortaria el script, asi que lo bajamos a
+# Continue mientras corremos git y volvemos a Stop despues.
 Write-Host "[2/4] Commit y push..." -ForegroundColor Cyan
-git add -A
-$hayCambios = (git status --porcelain)
+$prevEAP = $ErrorActionPreference
+$ErrorActionPreference = "Continue"
+
+git add -A 2>&1 | Out-Null
+$hayCambios = (git status --porcelain 2>$null)
 if ($hayCambios) {
     git commit -m $Mensaje 2>&1 | Out-Null
     git push 2>&1 | Out-Null
-    if ($LASTEXITCODE -ne 0) {
-        Write-Host "  El push fallo (codigo $LASTEXITCODE). Revisa tu conexion o autenticacion." -ForegroundColor Red
-        return
-    }
+    $pushExit = $LASTEXITCODE
 } else {
     Write-Host "  Sin cambios para commitear." -ForegroundColor DarkGray
-    # Igual sincronizamos por si hubo commits locales sin subir
     git push 2>&1 | Out-Null
+    $pushExit = $LASTEXITCODE
+}
+
+$ErrorActionPreference = $prevEAP
+if ($pushExit -ne 0) {
+    Write-Host "  El push fallo (codigo $pushExit). Revisa tu conexion o autenticacion." -ForegroundColor Red
+    return
 }
 
 # 3. Calcular version (misma logica que Compile.ps1)

@@ -445,7 +445,18 @@ Invoke-WPFRunspace -ParameterList @(,("repo", $sync.updateCheckRepo)) -ScriptBlo
     try {
         $release = Invoke-RestMethod -Uri "https://api.github.com/repos/$repo/releases/latest" -TimeoutSec 5
         $latest = "$($release.tag_name)".TrimStart("v")
-        if ($latest -and $latest -ne $sync.version) {
+
+        # La version es la fecha yy.MM.dd; solo comparamos esa parte (ignoramos el
+        # sufijo .N de publicaciones del mismo dia) y avisamos solo si es un dia mas nuevo.
+        function Get-VersionDate([string]$v) {
+            $parts = ($v -split '\.') | Select-Object -First 3
+            if ($parts.Count -eq 3) { try { return [version]($parts -join '.') } catch { return $null } }
+            return $null
+        }
+        $latestDate    = Get-VersionDate $latest
+        $installedDate = Get-VersionDate $sync.version
+
+        if ($latestDate -and $installedDate -and $latestDate -gt $installedDate) {
             Write-Host "Hay una nueva version de Liadev Tech disponible: $latest (instalada: $($sync.version))" -ForegroundColor Yellow
             Write-Host "Descargala desde: https://github.com/$repo/releases/latest" -ForegroundColor Yellow
         }
