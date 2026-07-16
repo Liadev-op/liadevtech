@@ -219,5 +219,49 @@
     "Type": "Button",
     "ButtonWidth": "300",
     "function": "Invoke-WPFSSHServer"
+  },
+  "WPFOpenWin11ISO": {
+    "Content": "Descargar Windows 11 (ISO oficial)",
+    "Description": "Abre la pagina oficial de Microsoft para descargar la ISO de Windows 11.",
+    "category": "5__Windows: ISO y activacion",
+    "panel": "1",
+    "Type": "Button",
+    "ButtonWidth": "300",
+    "InvokeScript": [
+      "Start-Process 'https://www.microsoft.com/software-download/windows11'"
+    ]
+  },
+  "WPFOpenWin10ISO": {
+    "Content": "Descargar Windows 10 (ISO oficial)",
+    "Description": "Abre la pagina oficial de Microsoft para descargar la ISO de Windows 10.",
+    "category": "5__Windows: ISO y activacion",
+    "panel": "1",
+    "Type": "Button",
+    "ButtonWidth": "300",
+    "InvokeScript": [
+      "Start-Process 'https://www.microsoft.com/software-download/windows10'"
+    ]
+  },
+  "WPFActivationStatus": {
+    "Content": "Ver estado de activacion",
+    "Description": "Muestra si Windows esta activado y hasta cuando (solo lectura, no modifica nada).",
+    "category": "5__Windows: ISO y activacion",
+    "panel": "1",
+    "Type": "Button",
+    "ButtonWidth": "300",
+    "InvokeScript": [
+      "$estado = (cscript //nologo \"$env:SystemRoot\\System32\\slmgr.vbs\" /xpr | Out-String).Trim(); if ([string]::IsNullOrWhiteSpace($estado)) { $estado = 'No se pudo obtener el estado de activacion.' }; [System.Windows.MessageBox]::Show($estado, 'Estado de activacion de Windows', 'OK', 'Information')"
+    ]
+  },
+  "WPFActivationSettings": {
+    "Content": "Activacion de Windows (Configuracion)",
+    "Description": "Abre la pagina de Activacion en la Configuracion de Windows, donde podes ingresar una clave o vincular tu licencia digital.",
+    "category": "5__Windows: ISO y activacion",
+    "panel": "1",
+    "Type": "Button",
+    "ButtonWidth": "300",
+    "InvokeScript": [
+      "Start-Process 'ms-settings:activation'"
+    ]
   }
 }
