@@ -37,13 +37,16 @@ function Invoke-WPFTab {
     } elseif ($sync.currentTab -eq "Tweaks") {
         # Reset Tweaks tab filter
         Find-TweaksByNameOrDescription -SearchString ""
+    } elseif ($sync.currentTab -eq "Config") {
+        # Reset Config tab filter
+        Find-FeaturesByNameOrDescription -SearchString ""
     } elseif ($sync.currentTab -eq "AppX") {
         # Reset AppX tab filter
         Find-TweaksByNameOrDescription -SearchString ""
     }
 
-    # Show search bar in Install, Tweaks, and AppX tabs
-    if ($tabNumber -eq 0 -or $tabNumber -eq 1 -or $tabNumber -eq 3) {
+    # Show search bar in Install, Tweaks, Config, and AppX tabs
+    if ($tabNumber -eq 0 -or $tabNumber -eq 1 -or $tabNumber -eq 2 -or $tabNumber -eq 3) {
         $sync.SearchBar.Visibility = "Visible"
         $searchIcon = ($sync.Form.FindName("SearchBar").Parent.Children | Where-Object { $_ -is [System.Windows.Controls.TextBlock] -and $_.Text -eq [char]0xE721 })[0]
         if ($searchIcon) {

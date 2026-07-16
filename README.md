@@ -51,3 +51,8 @@ Para agregar o quitar aplicaciones, editar `config/applications.json` y recompil
 ## Licencia
 
 MIT. Ver [LICENSE](LICENSE). Incluye código de WinUtil, Copyright (c) 2022 CT Tech Group LLC.
+
+## Mantenimiento del proyecto
+
+- **`.\Publicar.ps1 -Mensaje "que cambiaste"`** — compila, sube a GitHub y publica un nuevo release en un solo paso (requiere `gh` autenticado).
+- **`.\Sincronizar-Upstream.ps1`** — reporta qué apps y tweaks nuevos agregó WinUtil (Chris Titus Tech), para decidir a mano qué incorporar. No modifica nada.
