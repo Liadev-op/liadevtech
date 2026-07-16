@@ -72,18 +72,6 @@ $dateTime = Get-Date -Format "yyyy-MM-dd_HH-mm-ss"
 $winutildir = "$env:LocalAppData\liadevtech"
 $sync.winutildir = $winutildir
 
-# Carpeta con los instaladores corporativos de Daikin (NO se distribuyen con la app).
-# Orden de busqueda: variable de entorno (recurso de red) > carpeta junto al script > C:\Daikin
-$sync.daikinPath = if ($env:LIADEV_DAIKIN_PATH) {
-    $env:LIADEV_DAIKIN_PATH
-} elseif ($PSScriptRoot -and (Test-Path (Join-Path $PSScriptRoot "Daikin"))) {
-    Join-Path $PSScriptRoot "Daikin"
-} elseif ($PSScriptRoot -and (Test-Path (Join-Path (Split-Path $PSScriptRoot -Parent) "Daikin"))) {
-    Join-Path (Split-Path $PSScriptRoot -Parent) "Daikin"
-} else {
-    "C:\Daikin"
-}
-
 $logdir = "$winutildir\logs"
 $sync.logPath = "$logdir\liadevtech_$dateTime.log"
 $sync.transcriptPath = $sync.logPath
