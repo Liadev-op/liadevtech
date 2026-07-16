@@ -41,36 +41,58 @@ function Initialize-InstallCategoryAppList {
             $binding.RelativeSource = New-Object Windows.Data.RelativeSource([Windows.Data.RelativeSourceMode]::FindAncestor, [Windows.Controls.ItemsControl], 1)
             [void][Windows.Data.BindingOperations]::SetBinding($categoryContainer, [Windows.FrameworkElement]::WidthProperty, $binding)
 
-            # Add category label to container
-            $toggleButton = New-Object Windows.Controls.Label
-            $toggleButton.Content = "- $Category"
-            $toggleButton.Tag = "CategoryToggleButton"
-            $toggleButton.SetResourceReference([Windows.Controls.Control]::FontSizeProperty, "HeaderFontSize")
-            $toggleButton.SetResourceReference([Windows.Controls.Control]::FontFamilyProperty, "HeaderFontFamily")
-            $toggleButton.SetResourceReference([Windows.Controls.Control]::ForegroundProperty, "LabelboxForegroundColor")
+            # Encabezado de categoria estilo Liadev Tech: banner azul redondeado y colapsable
+            $toggleButton = New-Object Windows.Controls.Border
+            $toggleButton.SetResourceReference([Windows.Controls.Border]::BackgroundProperty, "GroupBorderBackgroundColor")
+            $toggleButton.CornerRadius = New-Object Windows.CornerRadius(8)
+            $toggleButton.Margin = New-Object Windows.Thickness(4, 10, 4, 6)
+            $toggleButton.Padding = New-Object Windows.Thickness(10, 4, 12, 5)
             $toggleButton.Cursor = [System.Windows.Input.Cursors]::Hand
             $toggleButton.HorizontalAlignment = [Windows.HorizontalAlignment]::Stretch
             $sync.$Category = $toggleButton
 
-            # Add click handler to toggle category visibility
+            $headerDock = New-Object Windows.Controls.DockPanel
+            $headerDock.LastChildFill = $true
+            $headerDock.Background = [Windows.Media.Brushes]::Transparent
+
+            # Chevron a la derecha (Segoe MDL2): 0xE70D = abierto, 0xE70E = cerrado
+            $chevron = New-Object Windows.Controls.TextBlock
+            $chevron.Text = [char]0xE70D
+            $chevron.FontFamily = New-Object Windows.Media.FontFamily("Segoe MDL2 Assets")
+            $chevron.FontSize = 12
+            $chevron.Foreground = [Windows.Media.Brushes]::White
+            $chevron.VerticalAlignment = "Center"
+            $chevron.Background = [Windows.Media.Brushes]::Transparent
+            [Windows.Controls.DockPanel]::SetDock($chevron, [Windows.Controls.Dock]::Right)
+            $null = $headerDock.Children.Add($chevron)
+
+            $headerText = New-Object Windows.Controls.TextBlock
+            $headerText.Text = $Category
+            $headerText.Foreground = [Windows.Media.Brushes]::White
+            $headerText.FontWeight = [Windows.FontWeights]::SemiBold
+            $headerText.Background = [Windows.Media.Brushes]::Transparent
+            $headerText.VerticalAlignment = "Center"
+            $headerText.SetResourceReference([Windows.Controls.TextBlock]::FontSizeProperty, "HeaderFontSize")
+            $null = $headerDock.Children.Add($headerText)
+
+            $toggleButton.Child = $headerDock
+
+            # Guardar el chevron para poder cambiarlo al colapsar
+            $toggleButton.Tag = $chevron
+
+            # Click: alternar visibilidad del WrapPanel de apps
             $toggleButton.Add_MouseLeftButtonUp({
                 param($categoryToggle)
-
-                # Find the parent StackPanel (categoryContainer)
                 $categoryContainer = $categoryToggle.Parent
                 if ($categoryContainer -and $categoryContainer.Children.Count -ge 2) {
-                    # The WrapPanel is the second child
                     $wrapPanel = $categoryContainer.Children[1]
-
-                    # Toggle visibility
+                    $chevronTb = $categoryToggle.Tag
                     if ($wrapPanel.Visibility -eq [Windows.Visibility]::Visible) {
                         $wrapPanel.Visibility = [Windows.Visibility]::Collapsed
-                        # Change - to +
-                        $categoryToggle.Content = $categoryToggle.Content -replace "^- ", "+ "
+                        if ($chevronTb) { $chevronTb.Text = [char]0xE70E }
                     } else {
                         $wrapPanel.Visibility = [Windows.Visibility]::Visible
-                        # Change + to -
-                        $categoryToggle.Content = $categoryToggle.Content -replace "^\+ ", "- "
+                        if ($chevronTb) { $chevronTb.Text = [char]0xE70D }
                     }
                 }
             })

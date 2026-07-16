@@ -1700,5 +1700,94 @@
         "OriginalValue": "<RemoveEntry>"
       }
     ]
+  },
+  "WPFTweaksClockSeconds": {
+    "Content": "Segundos en el reloj de la barra - Mostrar",
+    "Description": "Muestra los segundos en el reloj de la barra de tareas. Consume un poco mas de recursos.",
+    "category": "Personalizacion",
+    "panel": "1",
+    "registry": [
+      {
+        "Path": "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+        "Name": "ShowSecondsInSystemClock",
+        "Value": "1",
+        "Type": "DWord",
+        "OriginalValue": "0"
+      }
+    ]
+  },
+  "WPFTweaksExplorerToThisPC": {
+    "Content": "Abrir el Explorador en 'Este equipo'",
+    "Description": "Hace que el Explorador de archivos abra en 'Este equipo' en vez de 'Inicio/Acceso rapido'.",
+    "category": "Personalizacion",
+    "panel": "1",
+    "registry": [
+      {
+        "Path": "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+        "Name": "LaunchTo",
+        "Value": "1",
+        "Type": "DWord",
+        "OriginalValue": "2"
+      }
+    ]
+  },
+  "WPFTweaksDisableSuggestedContent": {
+    "Content": "Contenido sugerido en Configuracion - Desactivar",
+    "Description": "Quita las sugerencias y consejos que Windows muestra dentro de la app Configuracion.",
+    "category": "Tweaks esenciales",
+    "panel": "1",
+    "registry": [
+      {
+        "Path": "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+        "Name": "SubscribedContent-338393Enabled",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "1"
+      },
+      {
+        "Path": "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+        "Name": "SubscribedContent-353694Enabled",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "1"
+      },
+      {
+        "Path": "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+        "Name": "SubscribedContent-353696Enabled",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "1"
+      }
+    ]
+  },
+  "WPFTweaksDisableTransparency": {
+    "Content": "Efectos de transparencia - Desactivar",
+    "Description": "Desactiva la transparencia acrilica de Windows. Mejora un poco el rendimiento en equipos con GPU debil.",
+    "category": "Personalizacion",
+    "panel": "1",
+    "registry": [
+      {
+        "Path": "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize",
+        "Name": "EnableTransparency",
+        "Value": "0",
+        "Type": "DWord",
+        "OriginalValue": "1"
+      }
+    ]
+  },
+  "WPFTweaksFileCopyDetails": {
+    "Content": "Detalles al copiar archivos - Mostrar siempre",
+    "Description": "Muestra siempre el panel detallado (grafico de velocidad) al copiar o mover archivos en el Explorador.",
+    "category": "Personalizacion",
+    "panel": "1",
+    "registry": [
+      {
+        "Path": "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\OperationStatusManager",
+        "Name": "EnthusiastMode",
+        "Value": "1",
+        "Type": "DWord",
+        "OriginalValue": "0"
+      }
+    ]
   }
 }
