@@ -41,12 +41,13 @@ function Initialize-InstallCategoryAppList {
             $binding.RelativeSource = New-Object Windows.Data.RelativeSource([Windows.Data.RelativeSourceMode]::FindAncestor, [Windows.Controls.ItemsControl], 1)
             [void][Windows.Data.BindingOperations]::SetBinding($categoryContainer, [Windows.FrameworkElement]::WidthProperty, $binding)
 
-            # Encabezado de categoria estilo Liadev Tech: banner azul redondeado y colapsable
+            # Encabezado de categoria estilo Liadev Tech: barra de acento fina, texto y chevron; colapsable
             $toggleButton = New-Object Windows.Controls.Border
-            $toggleButton.SetResourceReference([Windows.Controls.Border]::BackgroundProperty, "GroupBorderBackgroundColor")
-            $toggleButton.CornerRadius = New-Object Windows.CornerRadius(8)
-            $toggleButton.Margin = New-Object Windows.Thickness(4, 10, 4, 6)
-            $toggleButton.Padding = New-Object Windows.Thickness(10, 4, 12, 5)
+            $toggleButton.BorderThickness = New-Object Windows.Thickness(0, 0, 0, 1)
+            $toggleButton.SetResourceReference([Windows.Controls.Border]::BorderBrushProperty, "BorderColor")
+            $toggleButton.Background = [Windows.Media.Brushes]::Transparent
+            $toggleButton.Margin = New-Object Windows.Thickness(4, 12, 12, 6)
+            $toggleButton.Padding = New-Object Windows.Thickness(0, 0, 0, 5)
             $toggleButton.Cursor = [System.Windows.Input.Cursors]::Hand
             $toggleButton.HorizontalAlignment = [Windows.HorizontalAlignment]::Stretch
             $sync.$Category = $toggleButton
@@ -59,16 +60,26 @@ function Initialize-InstallCategoryAppList {
             $chevron = New-Object Windows.Controls.TextBlock
             $chevron.Text = [char]0xE70D
             $chevron.FontFamily = New-Object Windows.Media.FontFamily("Segoe MDL2 Assets")
-            $chevron.FontSize = 12
-            $chevron.Foreground = [Windows.Media.Brushes]::White
+            $chevron.FontSize = 11
+            $chevron.SetResourceReference([Windows.Controls.TextBlock]::ForegroundProperty, "LabelboxForegroundColor")
             $chevron.VerticalAlignment = "Center"
+            $chevron.Margin = New-Object Windows.Thickness(0, 0, 4, 0)
             $chevron.Background = [Windows.Media.Brushes]::Transparent
             [Windows.Controls.DockPanel]::SetDock($chevron, [Windows.Controls.Dock]::Right)
             $null = $headerDock.Children.Add($chevron)
 
+            # Barra de acento fina a la izquierda
+            $accentBar = New-Object Windows.Controls.Border
+            $accentBar.Width = 4
+            $accentBar.CornerRadius = New-Object Windows.CornerRadius(2)
+            $accentBar.SetResourceReference([Windows.Controls.Border]::BackgroundProperty, "LabelboxForegroundColor")
+            $accentBar.Margin = New-Object Windows.Thickness(0, 1, 8, 1)
+            [Windows.Controls.DockPanel]::SetDock($accentBar, [Windows.Controls.Dock]::Left)
+            $null = $headerDock.Children.Add($accentBar)
+
             $headerText = New-Object Windows.Controls.TextBlock
             $headerText.Text = $Category
-            $headerText.Foreground = [Windows.Media.Brushes]::White
+            $headerText.SetResourceReference([Windows.Controls.TextBlock]::ForegroundProperty, "LabelboxForegroundColor")
             $headerText.FontWeight = [Windows.FontWeights]::SemiBold
             $headerText.Background = [Windows.Media.Brushes]::Transparent
             $headerText.VerticalAlignment = "Center"

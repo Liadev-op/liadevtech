@@ -78,8 +78,40 @@ function Initialize-InstallAppEntry {
         if ($app.link) {
             $logo = New-Object Windows.Controls.Image
             $logo.Stretch = [Windows.Media.Stretch]::Uniform
-            $logo.Source = "https://www.google.com/s2/favicons?sz=64&domain_url=$([uri]::EscapeDataString($app.link))"
             $logo.Add_ImageFailed({ $this.Visibility = "Collapsed"; $this.Parent.Children[0].Visibility = "Visible" })
+
+            # Cache local de iconos: se descargan una vez y se reutilizan (carga instantanea y offline).
+            $iconBaseDir = if ($sync.winutildir) { $sync.winutildir } else { Join-Path $env:LocalAppData "liadevtech" }
+            $iconDir = Join-Path $iconBaseDir "icons"
+            $iconPath = Join-Path $iconDir ("$($appKey -replace '[^\w\-]', '_').png")
+
+            $bmp = New-Object Windows.Media.Imaging.BitmapImage
+            $bmp.BeginInit()
+            $bmp.CacheOption = [Windows.Media.Imaging.BitmapCacheOption]::OnLoad
+            if (Test-Path $iconPath) {
+                # Cargar desde cache
+                $bmp.UriSource = [Uri]$iconPath
+                $bmp.EndInit()
+            } else {
+                # Descargar del servicio de favicons y guardar en cache al terminar
+                $bmp.UriSource = [Uri]"https://www.google.com/s2/favicons?sz=64&domain_url=$([uri]::EscapeDataString($app.link))"
+                $bmp.EndInit()
+                $saveHandler = {
+                    param($s, $e)
+                    try {
+                        if (-not (Test-Path $iconDir)) { New-Item -ItemType Directory -Path $iconDir -Force | Out-Null }
+                        $encoder = New-Object Windows.Media.Imaging.PngBitmapEncoder
+                        $encoder.Frames.Add([Windows.Media.Imaging.BitmapFrame]::Create($s))
+                        $fsIcon = [IO.File]::Open($iconPath, 'Create')
+                        $encoder.Save($fsIcon)
+                        $fsIcon.Close()
+                    } catch {
+                        # si falla el guardado, no pasa nada: se reintenta la proxima vez
+                    }
+                }.GetNewClosure()
+                $bmp.Add_DownloadCompleted($saveHandler)
+            }
+            $logo.Source = $bmp
             [void]$icon.Children.Add($logo)
         }
         [void]$contentPanel.Children.Add($icon)

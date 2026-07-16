@@ -1,14 +1,15 @@
 Write-Host @'
- _      _____          _____  ________      __
-| |    |_   _|   /\   |  __ \|  ____\ \    / /
-| |      | |    /  \  | |  | | |__   \ \  / /
-| |      | |   / /\ \ | |  | |  __|   \ \/ /
-| |____ _| |_ / ____ \| |__| | |____   \  /
-|______|_____/_/    \_\_____/|______|   \/
-
-======Liadev Tech========
-=====Windows Toolbox=====
-'@
+   __    _         __
+  / /   (_)__ _____/ /__ _   __
+ / /   / / _ `/ _  / -_) | / /
+/____/_/_/\_,_/\_,_/\__/|___/
+'@ -ForegroundColor Cyan
+Write-Host "  Windows Toolbox  " -ForegroundColor White -NoNewline
+Write-Host "v$($sync.version)" -ForegroundColor DarkGray
+Write-Host ("  " + ([string][char]0x2500) * 34) -ForegroundColor DarkCyan
+Write-Host "  Esta ventana muestra el progreso de las tareas." -ForegroundColor Gray
+Write-Host "  Podes minimizarla; la app trabaja en la ventana principal." -ForegroundColor Gray
+Write-Host ""
 
 # Load the configuration files
 

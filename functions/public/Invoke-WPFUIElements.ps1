@@ -135,23 +135,36 @@ function Invoke-WPFUIElements {
         foreach ($category in ($organizedData[$panelKey].Keys | Sort-Object)) {
             $count++
 
-            # Encabezado de categoria estilo Liadev Tech: banner redondeado con acento
-            $label = New-Object Windows.Controls.Label
-            $label.Content = $category -replace ".*__", ""
-            $label.SetResourceReference([Windows.Controls.Control]::FontSizeProperty, "HeaderFontSize")
-            $label.SetResourceReference([Windows.Controls.Control]::FontFamilyProperty, "HeaderFontFamily")
-            $label.Foreground = [Windows.Media.Brushes]::White
+            # Encabezado de categoria estilo Liadev Tech: barra de acento fina + texto y linea divisoria
+            $headerPanel = New-Object Windows.Controls.DockPanel
+            $headerPanel.Background = [Windows.Media.Brushes]::Transparent
+            $headerPanel.LastChildFill = $true
+
+            $accentBar = New-Object Windows.Controls.Border
+            $accentBar.Width = 4
+            $accentBar.CornerRadius = New-Object Windows.CornerRadius(2)
+            $accentBar.SetResourceReference([Windows.Controls.Border]::BackgroundProperty, "LabelboxForegroundColor")
+            $accentBar.Margin = New-Object Windows.Thickness(0, 1, 8, 1)
+            [Windows.Controls.DockPanel]::SetDock($accentBar, [Windows.Controls.Dock]::Left)
+            $null = $headerPanel.Children.Add($accentBar)
+
+            $label = New-Object Windows.Controls.TextBlock
+            $label.Text = $category -replace ".*__", ""
+            $label.SetResourceReference([Windows.Controls.TextBlock]::FontSizeProperty, "HeaderFontSize")
+            $label.SetResourceReference([Windows.Controls.TextBlock]::ForegroundProperty, "LabelboxForegroundColor")
             $label.Background = [Windows.Media.Brushes]::Transparent
             $label.FontWeight = [Windows.FontWeights]::SemiBold
-            $label.Padding = New-Object Windows.Thickness(10, 3, 10, 4)
+            $label.VerticalAlignment = "Center"
             $label.UseLayoutRounding = $true
+            $null = $headerPanel.Children.Add($label)
 
             $categoryBanner = New-Object Windows.Controls.Border
-            $categoryBanner.SetResourceReference([Windows.Controls.Border]::BackgroundProperty, "GroupBorderBackgroundColor")
-            $categoryBanner.CornerRadius = New-Object Windows.CornerRadius(8)
-            $categoryBanner.Margin = New-Object Windows.Thickness(2, 10, 12, 6)
+            $categoryBanner.BorderThickness = New-Object Windows.Thickness(0, 0, 0, 1)
+            $categoryBanner.SetResourceReference([Windows.Controls.Border]::BorderBrushProperty, "BorderColor")
+            $categoryBanner.Padding = New-Object Windows.Thickness(0, 0, 0, 5)
+            $categoryBanner.Margin = New-Object Windows.Thickness(2, 12, 12, 6)
             $categoryBanner.HorizontalAlignment = "Stretch"
-            $categoryBanner.Child = $label
+            $categoryBanner.Child = $headerPanel
             $itemsControl.Items.Add($categoryBanner) | Out-Null
             $sync[$category] = $categoryBanner
 
